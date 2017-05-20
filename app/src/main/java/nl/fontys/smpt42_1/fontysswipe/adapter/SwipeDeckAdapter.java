@@ -45,7 +45,7 @@ public class SwipeDeckAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             view = inflater.inflate(R.layout.swipe_card, parent, false);
 
-            QuestionViewHolder viewHolder = new QuestionViewHolder(parent.getContext(), view);
+            QuestionViewHolder viewHolder = new QuestionViewHolder(view);
 
             view.setTag(viewHolder);
         }
