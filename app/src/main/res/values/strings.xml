@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FontysSwipe</string>
+
+    <string name="content_description_question_illustration">question illustration</string>
+    <string name="content_description_swipe_right">swipe right</string>
+    <string name="content_description_swipe_left">swipe left</string>
+
 </resources>
