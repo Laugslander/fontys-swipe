@@ -19,7 +19,7 @@ public class Teacher {
     private String photo;
     private String title;
 
-    public Teacher(){
+    public Teacher() {
 
     }
 

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import com.daprlabs.aaron.swipedeck.SwipeDeck
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
+import nl.fontys.smpt42_1.fontysswipe.api.FontysAPI
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
 
 /**
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity(), Initializable {
 
         image_button_swipe_left.setOnClickListener({ swipe_deck.swipeTopCardLeft(0) })
         image_button_swipe_right.setOnClickListener({ swipe_deck.swipeTopCardRight(0) })
+
+        // test teacher ophalen:
+        val fontysAPI = FontysAPI()
+        val teacher = fontysAPI.getTeacherDataByID("i877348")
     }
 
     object swipeDeckCallBack : SwipeDeck.SwipeDeckCallback {
