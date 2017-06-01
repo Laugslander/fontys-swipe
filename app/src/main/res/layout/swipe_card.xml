@@ -17,20 +17,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/card_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/card_image"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/content_description_question_illustration"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/placeholder_image"/>
-
-        </RelativeLayout>
+            android:layout_height="300dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/content_description_question_illustration"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/placeholder_image"/>
 
         <TextView
             android:id="@+id/card_text"
@@ -66,4 +60,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </android.support.v7.widget.CardView>

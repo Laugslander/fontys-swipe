@@ -13,6 +13,7 @@ class QuestionViewHolder(private val itemView: View) {
 
     fun set(question: Question) = with(itemView) {
         Picasso.with(context).load(R.drawable.placeholder_image).fit().centerCrop().into(card_image) // TODO replace placeholder image
+
         card_text.text = question.text
     }
 
