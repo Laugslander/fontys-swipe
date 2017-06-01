@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "41831689934",
+    "firebase_url": "https://fontysswipe.firebaseio.com",
+    "project_id": "fontysswipe",
+    "storage_bucket": "fontysswipe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41831689934:android:6f930234b75f8628",
+        "android_client_info": {
+          "package_name": "nl.fontys.smpt42_1.fontysswipe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41831689934-v3mrhqad15i9u8btnn3pcrg1se4dioie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nl.fontys.smpt42_1.fontysswipe",
+            "certificate_hash": "a87c571959504dee22dde9eff8bf6d525e65cbeb"
+          }
+        },
+        {
+          "client_id": "41831689934-8s0h5u6lrug6iu57bd4bav04ovbse2uc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeaTloxpDxdfXnelVR1J2hTDwDPv--ZOc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41831689934-8s0h5u6lrug6iu57bd4bav04ovbse2uc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
