@@ -10,6 +10,7 @@ import java.util.List;
 import nl.fontys.smpt42_1.fontysswipe.R;
 import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.QuestionViewHolder;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
+import nl.fontys.smpt42_1.fontysswipe.util.locationUtil;
 
 /**
  * @author SMPT42-1

@@ -1,5 +1,7 @@
 package nl.fontys.smpt42_1.fontysswipe.domain;
 
+import java.util.HashMap;
+
 /**
  * Created by ken on 6/1/2017.
  */
@@ -18,6 +20,8 @@ public class Teacher {
     private String mobileNumber;
     private String photo;
     private String title;
+
+    private HashMap<String, Integer> routePoints;
 
     public Teacher() {
 
@@ -117,5 +121,9 @@ public class Teacher {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public HashMap<String, Integer> getRoutePoints(){
+        return this.routePoints;
     }
 }
