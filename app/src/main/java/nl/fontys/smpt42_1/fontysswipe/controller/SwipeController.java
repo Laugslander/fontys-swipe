@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nl.fontys.smpt42_1.fontysswipe.Initializable;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnRoutesReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.QuestionRepository;
@@ -19,22 +18,25 @@ public final class SwipeController {
 
     private static SwipeController instance;
 
-    private Initializable initializable;
+    private SwipeControllerDelegate delegate;
 
     private Map<Route, Integer> points; // Routes and corresponding number of points.
     private List<Route> routes;
     private List<Question> questions;
 
-    private SwipeController(Initializable initializable) {
-        this.initializable = initializable;
+    private int questionCounter;
+
+    private SwipeController(SwipeControllerDelegate delegate) {
+        this.delegate = delegate;
 
         points = new HashMap<>();
+        questionCounter = 0;
 
         retrieveRoutes();
         retrieveQuestions();
     }
 
-    public static SwipeController createInstance(Initializable initializable) {
+    public static SwipeController createInstance(SwipeControllerDelegate initializable) {
         instance = new SwipeController(initializable);
         return instance;
     }
@@ -58,16 +60,23 @@ public final class SwipeController {
             @Override
             public void onQuestionsReceived(List<Question> questions) {
                 SwipeController.this.questions = questions;
-                initializable.onInitialized();
+                delegate.onSwipeControllerInitialized();
             }
         });
     }
 
-    public void processQuestion(Question question, boolean answer) {
+    public void processQuestion(boolean answer) {
+        Question question = questions.get(questionCounter);
         Map<String, Integer> questionPoints = question.getPoints();
 
+        questionCounter++;
+
         for (Route route : routes) {
-            points.put(route, answer ? points.get(route) + questionPoints.get(route.getName()) : points.get(route) - questionPoints.get(route.getName()));
+            points.put(route, answer ? points.get(route) + questionPoints.get(route.getAbbreviation()) : points.get(route) - questionPoints.get(route.getAbbreviation()));
+        }
+
+        if (questionCounter == questions.size()) {
+            delegate.onAllQuestionsProcessed();
         }
     }
 
