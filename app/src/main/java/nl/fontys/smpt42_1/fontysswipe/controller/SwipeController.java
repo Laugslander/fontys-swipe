@@ -20,14 +20,14 @@ import nl.fontys.smpt42_1.fontysswipe.domain.RouteScore;
  */
 public final class SwipeController {
 
-    private static final int NUMBER_OF_TOP_ROUTES = 5;
+    private static final int NUMBER_OF_TOP_ROUTES = 12; // Current maximum number of routes is 12.
 
     private static SwipeController instance;
 
     private SwipeControllerDelegate delegate;
 
-    private List<Route> routes; // List of all routes
-    private List<Question> questions; // List of all questions
+    private List<Route> routes; // List of all routes.
+    private List<Question> questions; // List of all questions.
     private Map<Route, Integer> points; // Map of all routes and corresponding number of points.
 
     private int questionCounter;
@@ -38,7 +38,7 @@ public final class SwipeController {
         points = new HashMap<>();
         questionCounter = 0;
 
-        initializeData();
+        retrieveData();
     }
 
     public static SwipeController createInstance(SwipeControllerDelegate delegate) {
@@ -50,7 +50,7 @@ public final class SwipeController {
         return instance;
     }
 
-    private void initializeData() {
+    private void retrieveData() {
         retrieveRoutes();
         retrieveQuestions();
     }
@@ -70,6 +70,7 @@ public final class SwipeController {
             @Override
             public void onQuestionsReceived(List<Question> questions) {
                 SwipeController.this.questions = questions;
+                // Notify the MainActivity when the question data is loaded.
                 delegate.onSwipeControllerInitialized();
             }
         });
@@ -82,9 +83,14 @@ public final class SwipeController {
         questionCounter++;
 
         for (Route route : routes) {
-            points.put(route, answer ? points.get(route) + questionPoints.get(route.getAbbreviation()) : points.get(route) - questionPoints.get(route.getAbbreviation()));
+            // Check if the answer on the question was positive (yes).
+            if (answer) {
+                // Add the question points to map of routes and total points.
+                points.put(route, points.get(route) + questionPoints.get(route.getAbbreviation()));
+            }
         }
 
+        // Notify the MainActivity when all questions are processed.
         if (questionCounter == questions.size()) {
             delegate.onAllQuestionsProcessed();
         }
@@ -94,10 +100,12 @@ public final class SwipeController {
         Queue<RouteScore> queue = new PriorityQueue<>();
         List<RouteScore> routes = new ArrayList<>();
 
+        // Add all route and corresponding points to the queue as new RouteScore objects.
         for (Route route : points.keySet()) {
             queue.add(new RouteScore(route.getName(), points.get(route)));
         }
 
+        // Poll the top number of routes from the queue and add them to the list.
         for (int i = 0; i < NUMBER_OF_TOP_ROUTES; i++) {
             routes.add(queue.poll());
         }
