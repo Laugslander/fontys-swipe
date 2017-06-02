@@ -23,7 +23,7 @@ public class Question {
         return text;
     }
 
-    public Map getPoints() {
+    public Map<String, Integer> getPoints() {
         return points;
     }
 

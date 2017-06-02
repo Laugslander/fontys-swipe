@@ -8,15 +8,11 @@ import java.util.concurrent.Future;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 
 /**
- * Created by ken on 6/1/2017.
+ * @author SMPT42-1
  */
-
 public class FontysAPI {
 
     private String accessToken;
-
-    public FontysAPI() {
-    }
 
     public Teacher getTeacherDataByID(String userid) {
         Teacher teacher = null;
@@ -35,4 +31,5 @@ public class FontysAPI {
         }
         return teacher;
     }
+
 }
