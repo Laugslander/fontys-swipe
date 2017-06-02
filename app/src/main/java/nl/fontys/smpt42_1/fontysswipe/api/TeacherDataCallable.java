@@ -21,15 +21,14 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by ken on 6/1/2017.
+ * @author SMPT42-1
  */
-
-public class TeacherDataCallable implements Callable<Teacher> {
+class TeacherDataCallable implements Callable<Teacher> {
 
     private String userID;
     private String accessToken;
 
-    public TeacherDataCallable(String userID) {
+    TeacherDataCallable(String userID) {
         this.userID = userID;
     }
 
@@ -111,11 +110,12 @@ public class TeacherDataCallable implements Callable<Teacher> {
         }
     }
 
-    public void setAccessToken(String accessToken) {
+    void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    public String getAccessToken() {
+    String getAccessToken() {
         return accessToken;
     }
+
 }
