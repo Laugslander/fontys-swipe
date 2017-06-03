@@ -8,7 +8,6 @@ import nl.fontys.smpt42_1.fontysswipe.R.color.*
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
 import org.eazegraph.lib.models.PieModel
 
-
 /**
  * @author SMPT42-1
  */
@@ -21,10 +20,11 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
 
         val colors = arrayOf(colorFontysPrimary, colorFontysSecondary, colorFontysBlend)
-        var currentColor = 0
+        var index = 0
+
         controller.topRoutes.forEach { route ->
-            if (currentColor == colors.size - 1) currentColor = 0 else currentColor++ // Select a random color index.
-            pie_chart.addPieSlice(PieModel(String.format("ICT & %s", route.name), route.score.toFloat(), getColor(this, colors[currentColor])))
+            if (index == colors.size - 1) index = 0 else index++ // Select a random colors index.
+            pie_chart.addPieSlice(PieModel(String.format("ICT & %s", route.name), route.score.toFloat(), getColor(this, colors[index])))
         }
         pie_chart.startAnimation()
     }

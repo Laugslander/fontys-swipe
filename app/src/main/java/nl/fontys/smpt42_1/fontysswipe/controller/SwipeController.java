@@ -28,15 +28,18 @@ public final class SwipeController {
 
     private List<Route> routes; // List of all routes.
     private List<Question> questions; // List of all questions.
-    private Map<Route, Integer> points; // Map of all routes and corresponding number of points.
+    private Map<Route, Integer> total; // Map of all routes and the corresponding total number of points.
 
     private int questionCounter;
+    private int pointsCounter;
 
     private SwipeController(SwipeControllerDelegate delegate) {
         this.delegate = delegate;
 
-        points = new HashMap<>();
+        total = new HashMap<>();
+
         questionCounter = 0;
+        pointsCounter = 0;
 
         retrieveData();
     }
@@ -60,7 +63,7 @@ public final class SwipeController {
             @Override
             public void onRoutesReceived(List<Route> routes) {
                 SwipeController.this.routes = routes;
-                for (Route route : routes) SwipeController.this.points.put(route, 0);
+                for (Route route : routes) SwipeController.this.total.put(route, 0);
             }
         });
     }
@@ -85,8 +88,10 @@ public final class SwipeController {
         for (Route route : routes) {
             // Check if the answer on the question was positive (yes).
             if (answer) {
-                // Add the question points to map of routes and total points.
-                points.put(route, points.get(route) + questionPoints.get(route.getAbbreviation()));
+                // Add the question total to map of routes and total total.
+                int points = question.getPoints().get(route.getAbbreviation());
+                total.put(route, total.get(route) + points);
+                pointsCounter += points;
             }
         }
 
@@ -100,9 +105,10 @@ public final class SwipeController {
         Queue<RouteScore> queue = new PriorityQueue<>();
         List<RouteScore> routes = new ArrayList<>();
 
-        // Add all route and corresponding points to the queue as new RouteScore objects.
-        for (Route route : points.keySet()) {
-            queue.add(new RouteScore(route.getName(), points.get(route)));
+        // Add all routes and corresponding total points to the queue as new RouteScore objects.
+        for (Route route : total.keySet()) {
+            int percentage = (int) ((float) total.get(route) / pointsCounter * 100);
+            queue.add(new RouteScore(route.getName(), percentage));
         }
 
         // Poll the top number of routes from the queue and add them to the list.
