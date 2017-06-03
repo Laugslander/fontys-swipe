@@ -7,25 +7,18 @@ import com.daprlabs.aaron.swipedeck.SwipeDeck
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
-import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerDelegate
-import nl.fontys.smpt42_1.fontysswipe.util.locationUtil
+import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerListener
 
 /**
  * @author SMPT42-1
  */
-class MainActivity : AppCompatActivity(), SwipeControllerDelegate {
+class MainActivity : AppCompatActivity(), SwipeControllerListener {
 
     val controller: SwipeController = SwipeController.createInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-        var loc = locationUtil(this)
-        loc.city
-
-
     }
 
     override fun onSwipeControllerInitialized() {

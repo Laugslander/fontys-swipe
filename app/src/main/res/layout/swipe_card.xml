@@ -1,16 +1,16 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="8dp"
-    android:gravity="center_horizontal"
-    android:padding="25dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
-    card_view:cardUseCompatPadding="true">
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:id="@+id/card_view"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="8dp"
+                                    android:gravity="center_horizontal"
+                                    android:padding="25dp"
+                                    card_view:cardCornerRadius="4dp"
+                                    card_view:cardElevation="4dp"
+                                    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_description_question_illustration"
             android:scaleType="centerCrop"
-            tools:src="@drawable/placeholder_image" />
+            tools:src="@drawable/placeholder_image"/>
 
         <TextView
             android:id="@+id/card_text"
@@ -35,7 +35,7 @@
             android:minLines="3"
             android:textColor="@color/colorCardText"
             android:textSize="20sp"
-            tools:text="Placeholder text" />
+            tools:text="Placeholder text"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 android:contentDescription="@string/content_description_swipe_left"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/thumb_down" />
+                android:src="@drawable/thumb_down"/>
 
             <ImageView
                 android:id="@+id/right_image"
@@ -63,7 +63,7 @@
                 android:contentDescription="@string/content_description_question_illustration"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/thumb_up" />
+                android:src="@drawable/thumb_up"/>
 
         </LinearLayout>
 

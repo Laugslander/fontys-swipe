@@ -1,10 +1,9 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
 /**
- * @author Robin Laugs
+ * @author SMPT42-1
  */
-
-public interface SwipeControllerDelegate {
+public interface SwipeControllerListener {
 
     void onSwipeControllerInitialized();
 

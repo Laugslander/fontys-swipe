@@ -3,9 +3,8 @@ package nl.fontys.smpt42_1.fontysswipe.domain;
 import java.util.HashMap;
 
 /**
- * Created by ken on 6/1/2017.
+ * @author SMPT42-1
  */
-
 public class Teacher {
 
     private String id;
@@ -21,10 +20,10 @@ public class Teacher {
     private String photo;
     private String title;
 
-    private HashMap<String, Integer> routePoints;
+    private HashMap<String, Integer> points;
 
     public Teacher() {
-
+        // Empty constructor used for Firebase binding.
     }
 
     public String getId() {
@@ -123,7 +122,8 @@ public class Teacher {
         this.title = title;
     }
 
-    public HashMap<String, Integer> getRoutePoints(){
-        return this.routePoints;
+    public HashMap<String, Integer> getPoints() {
+        return this.points;
     }
+
 }

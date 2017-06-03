@@ -24,7 +24,7 @@ public final class SwipeController {
 
     private static SwipeController instance;
 
-    private SwipeControllerDelegate delegate;
+    private SwipeControllerListener delegate;
 
     private List<Route> routes; // List of all routes.
     private List<Question> questions; // List of all questions.
@@ -33,7 +33,7 @@ public final class SwipeController {
     private int questionCounter;
     private int pointsCounter;
 
-    private SwipeController(SwipeControllerDelegate delegate) {
+    private SwipeController(SwipeControllerListener delegate) {
         this.delegate = delegate;
 
         total = new HashMap<>();
@@ -44,7 +44,7 @@ public final class SwipeController {
         retrieveData();
     }
 
-    public static SwipeController createInstance(SwipeControllerDelegate delegate) {
+    public static SwipeController createInstance(SwipeControllerListener delegate) {
         instance = new SwipeController(delegate);
         return instance;
     }

@@ -18,13 +18,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.fontys.smpt42_1.fontysswipe.enums.city;
+import nl.fontys.smpt42_1.fontysswipe.domain.enums.City;
 
 /**
- * Created by Merik on 01/06/2017.
+ * @author SMPT42-1
  */
-
-public class locationUtil implements LocationListener{
+public class LocationUtil implements LocationListener {
 
     private Geocoder geocoder;
     private Activity locationActivity;
@@ -33,25 +32,25 @@ public class locationUtil implements LocationListener{
     private static int REQUEST_CODE = 0;
     private static final String GPS_SERVICE = "gps";
 
-    public locationUtil(Activity locationActivity) {
+    public LocationUtil(Activity locationActivity) {
         this.locationActivity = locationActivity;
     }
 
-    public city getCity() {
+    public City getCity() {
         this.location = null;
         Geocoder geocoder = new Geocoder(locationActivity);
         List<Address> addressesList = new ArrayList<>();
 
-        LocationManager manager = (LocationManager) locationActivity.getSystemService(locationActivity.LOCATION_SERVICE);
+        LocationManager manager = (LocationManager) locationActivity.getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(locationActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(locationActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 locationActivity.requestPermissions(new String[]{
-                               Manifest.permission.ACCESS_FINE_LOCATION,
-                               Manifest.permission.ACCESS_COARSE_LOCATION,
-                               Manifest.permission.INTERNET},
-                       REQUEST_CODE);
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.INTERNET},
+                        REQUEST_CODE);
             }
         } else {
             manager.requestLocationUpdates(GPS_SERVICE, 0, 0, this);
@@ -59,9 +58,9 @@ public class locationUtil implements LocationListener{
         }
 
         try {
-            if(location != null) {
+            if (location != null) {
                 addressesList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            } else{
+            } else {
                 Log.e("LOCATION NULL", "Location is null.");
             }
         } catch (IOException e) {
@@ -69,11 +68,11 @@ public class locationUtil implements LocationListener{
         }
 
         System.out.println("Stad: " + addressesList.get(0).getLocality());
-        switch(addressesList.get(0).getLocality()){
+        switch (addressesList.get(0).getLocality()) {
             case "Eindhoven":
-                return city.EINDHOVEN;
+                return City.EINDHOVEN;
             case "Tilburg":
-                return city.TILBURG;
+                return City.TILBURG;
             default:
                 return null;
         }
@@ -98,4 +97,5 @@ public class locationUtil implements LocationListener{
     public void onProviderDisabled(String s) {
 
     }
+
 }

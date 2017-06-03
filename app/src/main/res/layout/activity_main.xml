@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:swipedeck="http://schemas.android.com/apk/swipe-card"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="nl.fontys.smpt42_1.fontysswipe.MainActivity">
+                                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                       xmlns:swipedeck="http://schemas.android.com/apk/swipe-card"
+                                                       xmlns:tools="http://schemas.android.com/tools"
+                                                       android:id="@+id/swipeLayout"
+                                                       android:layout_width="match_parent"
+                                                       android:layout_height="match_parent"
+                                                       android:orientation="vertical"
+                                                       tools:context="nl.fontys.smpt42_1.fontysswipe.MainActivity">
 
     <com.daprlabs.aaron.swipedeck.SwipeDeck
         android:id="@+id/swipe_deck"
@@ -20,7 +20,7 @@
         swipedeck:card_spacing="25dp"
         swipedeck:max_visible="3"
         swipedeck:preview_layout="@layout/swipe_card"
-        swipedeck:render_above="false" />
+        swipedeck:render_above="false"/>
 
     <ImageButton
         android:id="@+id/image_button_swipe_left"
@@ -35,7 +35,7 @@
         android:contentDescription="@string/content_description_swipe_right"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/thumb_down" />
+        app:srcCompat="@drawable/thumb_down"/>
 
     <ImageButton
         android:id="@+id/image_button_swipe_right"
@@ -50,6 +50,6 @@
         android:contentDescription="@string/content_description_swipe_left"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/thumb_up" />
+        app:srcCompat="@drawable/thumb_up"/>
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
