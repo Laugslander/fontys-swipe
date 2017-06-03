@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerDelegate
+import nl.fontys.smpt42_1.fontysswipe.util.locationUtil
 
 /**
  * @author SMPT42-1
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity(), SwipeControllerDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        var loc = locationUtil(this)
+        loc.city
+
+
     }
 
     override fun onSwipeControllerInitialized() {

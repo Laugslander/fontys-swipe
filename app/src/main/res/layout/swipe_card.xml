@@ -1,20 +1,21 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    android:id="@+id/card_view"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="8dp"
-                                    android:gravity="center_horizontal"
-                                    android:padding="25dp"
-                                    card_view:cardCornerRadius="4dp"
-                                    card_view:cardElevation="4dp"
-                                    card_view:cardUseCompatPadding="true">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    android:gravity="center_horizontal"
+    android:padding="25dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorFontysPrimary"
         android:orientation="vertical">
 
         <ImageView
@@ -24,7 +25,7 @@
             android:adjustViewBounds="true"
             android:contentDescription="@string/content_description_question_illustration"
             android:scaleType="centerCrop"
-            tools:src="@drawable/placeholder_image"/>
+            tools:src="@drawable/placeholder_image" />
 
         <TextView
             android:id="@+id/card_text"
@@ -32,30 +33,37 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:minLines="3"
+            android:textColor="@color/colorCardText"
             android:textSize="20sp"
-            tools:text="Placeholder text"/>
+            tools:text="Placeholder text" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/left_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_swipe_left"
-                android:src="@drawable/arrow_left"/>
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/thumb_down" />
 
             <ImageView
                 android:id="@+id/right_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_question_illustration"
-                android:src="@drawable/arrow_right"/>
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/thumb_up" />
 
         </LinearLayout>
 

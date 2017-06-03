@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:swipedeck="http://schemas.android.com/apk/swipe-card"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,7 +20,22 @@
         swipedeck:card_spacing="25dp"
         swipedeck:max_visible="3"
         swipedeck:preview_layout="@layout/swipe_card"
-        swipedeck:render_above="false"/>
+        swipedeck:render_above="false" />
+
+    <ImageButton
+        android:id="@+id/image_button_swipe_left"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/content_description_swipe_right"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/thumb_down" />
 
     <ImageButton
         android:id="@+id/image_button_swipe_right"
@@ -30,21 +44,12 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:adjustViewBounds="true"
         android:background="@null"
         android:contentDescription="@string/content_description_swipe_left"
-        app:srcCompat="@drawable/arrow_right"
-        android:layout_marginRight="5dp"/>
-
-    <ImageButton
-        android:id="@+id/image_button_swipe_left"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_gravity="bottom|start"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="5dp"
-        android:background="@null"
-        android:contentDescription="@string/content_description_swipe_right"
-        app:srcCompat="@drawable/arrow_left"
-        android:layout_marginLeft="5dp"/>
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/thumb_up" />
 
 </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
