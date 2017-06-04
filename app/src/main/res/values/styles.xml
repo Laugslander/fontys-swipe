@@ -9,4 +9,12 @@
         <item name="android:colorBackground">@color/colorBackground</item>
     </style>
 
+    <style name="TextTitle">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextTitleColor" parent="TextTitle">
+        <item name="android:textColor">@color/colorFontysPrimary</item>
+    </style>
+
 </resources>

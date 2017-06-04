@@ -1,45 +1,46 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnRoutesReceivedCallback;
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.QuestionRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.RouteRepository;
+import nl.fontys.smpt42_1.fontysswipe.data.repository.TeacherRepository;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
-import nl.fontys.smpt42_1.fontysswipe.domain.RouteScore;
+import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticsResult;
 
 /**
  * @author SMPT42-1
  */
 public final class SwipeController {
 
-    private static final int NUMBER_OF_TOP_ROUTES = 12; // Current maximum number of routes is 12.
+    private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
 
     private static SwipeController instance;
 
     private SwipeControllerListener delegate;
 
-    private List<Route> routes; // List of all routes.
-    private List<Question> questions; // List of all questions.
-    private Map<Route, Integer> total; // Map of all routes and the corresponding total number of points.
+    private List<Route> routes;
+    private List<Question> questions;
+    private List<Teacher> teachers;
+    private List<Result> results;
 
     private int questionCounter;
-    private int pointsCounter;
 
     private SwipeController(SwipeControllerListener delegate) {
         this.delegate = delegate;
 
-        total = new HashMap<>();
+        results = new ArrayList<>();
 
         questionCounter = 0;
-        pointsCounter = 0;
 
         retrieveData();
     }
@@ -56,6 +57,7 @@ public final class SwipeController {
     private void retrieveData() {
         retrieveRoutes();
         retrieveQuestions();
+        retrieveTeachers();
     }
 
     private void retrieveRoutes() {
@@ -63,7 +65,6 @@ public final class SwipeController {
             @Override
             public void onRoutesReceived(List<Route> routes) {
                 SwipeController.this.routes = routes;
-                for (Route route : routes) SwipeController.this.total.put(route, 0);
             }
         });
     }
@@ -79,9 +80,17 @@ public final class SwipeController {
         });
     }
 
+    private void retrieveTeachers() {
+        new TeacherRepository().getTeachers(new OnTeachersReceivedCallback() {
+            @Override
+            public void onTeachersReceived(List<Teacher> teachers) {
+                SwipeController.this.teachers = teachers;
+            }
+        });
+    }
+
     public void processQuestion(boolean answer) {
         Question question = questions.get(questionCounter);
-        Map<String, Integer> questionPoints = question.getPoints();
 
         questionCounter++;
 
@@ -90,26 +99,26 @@ public final class SwipeController {
             if (answer) {
                 // Add the question total to map of routes and total total.
                 int points = question.getPoints().get(route.getAbbreviation());
-                total.put(route, total.get(route) + points);
-                pointsCounter += points;
+                route.addPoints(points);
             }
         }
 
-        // Notify the MainActivity when all questions are processed.
+        // Check if all questions are processed.
         if (questionCounter == questions.size()) {
+            // Generate the results.
+            generateResults();
+            // Notify the MainActivity when all questions are processed.
             delegate.onAllQuestionsProcessed();
         }
     }
 
-    public List<RouteScore> getTopRoutes() {
-        Queue<RouteScore> queue = new PriorityQueue<>();
-        List<RouteScore> routes = new ArrayList<>();
+    private void generateResults() {
+        results.add(new StatisticsResult("Statistieken", getTopRoutes()));
+    }
 
-        // Add all routes and corresponding total points to the queue as new RouteScore objects.
-        for (Route route : total.keySet()) {
-            int percentage = (int) ((float) total.get(route) / pointsCounter * 100);
-            queue.add(new RouteScore(route.getName(), percentage));
-        }
+    private List<Route> getTopRoutes() {
+        Queue<Route> queue = new PriorityQueue<>(routes);
+        List<Route> routes = new ArrayList<>();
 
         // Poll the top number of routes from the queue and add them to the list.
         for (int i = 0; i < NUMBER_OF_TOP_ROUTES; i++) {
@@ -121,6 +130,10 @@ public final class SwipeController {
 
     public List<Question> getQuestions() {
         return questions;
+    }
+
+    public List<Result> getResults() {
+        return results;
     }
 
 }

@@ -1,6 +1,7 @@
 package nl.fontys.smpt42_1.fontysswipe
 
 import android.content.Intent
+import android.content.Intent.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View.INVISIBLE
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
 
     override fun onAllQuestionsProcessed() {
         val intent = Intent(this, ResultActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
 

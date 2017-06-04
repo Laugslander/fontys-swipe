@@ -27,8 +27,8 @@ public class RouteFirebaseContext extends FirebaseContext implements RouteContra
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Route> routes = new ArrayList<>();
 
-                for (DataSnapshot questionData : dataSnapshot.getChildren()) {
-                    Route route = questionData.getValue(Route.class);
+                for (DataSnapshot routeData : dataSnapshot.getChildren()) {
+                    Route route = routeData.getValue(Route.class);
                     routes.add(route);
                 }
 

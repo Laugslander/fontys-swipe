@@ -1,6 +1,5 @@
 package nl.fontys.smpt42_1.fontysswipe.data.repository;
 
-import nl.fontys.smpt42_1.fontysswipe.data.DatabaseConstants;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.QuestionContract;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionImageLinkReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
@@ -13,7 +12,7 @@ public final class QuestionRepository {
     private final QuestionContract context;
 
     public QuestionRepository() {
-        this.context = DatabaseConstants.QUESTION_CONTEXT;
+        this.context = RepositoryConstants.QUESTION_CONTEXT;
     }
 
     public void getQuestions(OnQuestionsReceivedCallback callback) {
