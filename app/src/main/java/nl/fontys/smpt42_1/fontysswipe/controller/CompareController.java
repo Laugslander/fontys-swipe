@@ -1,8 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -32,7 +32,7 @@ class CompareController {
      * @param teachers   all docenten.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
-    public TreeMap<Teacher, Double> compareTeachers(HashMap<String, Integer> userPoints, ArrayList<Teacher> teachers) {
+    public TreeMap<Teacher, Double> compareTeachers(HashMap<String, Integer> userPoints, List<Teacher> teachers) {
         HashMap<String, Integer> differenceMap = new HashMap<>();
         HashMap<Teacher, Double> resultMap = new HashMap<>();
 
