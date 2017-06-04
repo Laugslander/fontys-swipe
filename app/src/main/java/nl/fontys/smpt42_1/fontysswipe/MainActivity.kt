@@ -3,6 +3,8 @@ package nl.fontys.smpt42_1.fontysswipe
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import com.daprlabs.aaron.swipedeck.SwipeDeck
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        showViewElements(false)
     }
 
     override fun onSwipeControllerInitialized() {
@@ -32,12 +36,20 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
 
         image_button_swipe_left.setOnClickListener({ swipe_deck.swipeTopCardLeft(0) })
         image_button_swipe_right.setOnClickListener({ swipe_deck.swipeTopCardRight(0) })
+
+        showViewElements(true)
     }
 
     override fun onAllQuestionsProcessed() {
         val intent = Intent(this, ResultActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    private fun showViewElements(show: Boolean) {
+        progress_bar.visibility = if (show) INVISIBLE else VISIBLE
+        image_button_swipe_left.visibility = if (show) VISIBLE else INVISIBLE
+        image_button_swipe_right.visibility = if (show) VISIBLE else INVISIBLE
     }
 
 }

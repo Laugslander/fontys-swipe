@@ -2,8 +2,7 @@
 <resources>
     <color name="colorFontysPrimary">#663366</color>
     <color name="colorFontysPrimaryDark">#512851</color>
-    <color name="colorFontysSecondary">#E5007D</color>
+    <color name="colorFontysSecondary">#e5007d</color>
     <color name="colorFontysBlend">#A61A72</color>
-    <color name="colorCardText">#FFFFFF</color>
     <color name="colorBackground">#D3D3D3</color>
 </resources>
