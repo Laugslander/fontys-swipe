@@ -20,7 +20,7 @@ class StatisticsResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
 
         result.routes.forEach { route ->
             if (index == colors.size - 1) index = 0 else index++ // Select a random colors index.
-            pie_chart.addPieSlice(PieModel(String.format("ICT & %s", route.name), route.points.toFloat(), getColor(context, colors[index])))
+            pie_chart.addPieSlice(PieModel(String.format("ICT & %s", route.name), route.userPoints.toFloat(), getColor(context, colors[index])))
         }
 
         pie_chart.startAnimation()

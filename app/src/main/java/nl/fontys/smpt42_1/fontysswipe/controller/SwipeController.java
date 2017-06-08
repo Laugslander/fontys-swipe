@@ -26,7 +26,7 @@ public final class SwipeController {
 
     private static SwipeController instance;
 
-    private SwipeControllerListener delegate;
+    private SwipeControllerListener listener;
 
     private List<Route> routes;
     private List<Question> questions;
@@ -35,8 +35,8 @@ public final class SwipeController {
 
     private int questionCounter;
 
-    private SwipeController(SwipeControllerListener delegate) {
-        this.delegate = delegate;
+    private SwipeController(SwipeControllerListener listener) {
+        this.listener = listener;
 
         results = new ArrayList<>();
 
@@ -75,7 +75,7 @@ public final class SwipeController {
             public void onQuestionsReceived(List<Question> questions) {
                 SwipeController.this.questions = questions;
                 // Notify the MainActivity when the question data is loaded.
-                delegate.onSwipeControllerInitialized();
+                listener.onSwipeControllerInitialized();
             }
         });
     }
@@ -99,7 +99,7 @@ public final class SwipeController {
             if (answer) {
                 // Add the question total to map of routes and total total.
                 int points = question.getPoints().get(route.getAbbreviation());
-                route.addPoints(points);
+                route.addUserPoints(points);
             }
         }
 
@@ -108,7 +108,7 @@ public final class SwipeController {
             // Generate the results.
             generateResults();
             // Notify the MainActivity when all questions are processed.
-            delegate.onAllQuestionsProcessed();
+            listener.onAllQuestionsProcessed();
         }
     }
 

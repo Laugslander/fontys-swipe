@@ -9,7 +9,7 @@ public class Route implements Comparable<Route> {
 
     private String abbreviation;
     private String name;
-    private int points;
+    private int userPoints;
 
     public Route() {
         // Empty constructor used for Firebase binding.
@@ -23,17 +23,17 @@ public class Route implements Comparable<Route> {
         return name;
     }
 
-    public int getPoints() {
-        return points;
+    public int getUserPoints() {
+        return userPoints;
     }
 
-    public void addPoints(int points) {
-        this.points += points;
+    public void addUserPoints(int points) {
+        this.userPoints += points;
     }
 
     @Override
     public int compareTo(@NonNull Route other) {
-        return other.points - points;
+        return other.userPoints - userPoints;
     }
 
 }
