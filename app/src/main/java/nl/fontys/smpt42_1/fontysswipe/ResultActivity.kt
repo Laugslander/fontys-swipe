@@ -19,7 +19,7 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
 
         recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.adapter = ResultAdapter(this, controller.results)
+        recycler_view.adapter = ResultAdapter(controller.results)
     }
 
 }

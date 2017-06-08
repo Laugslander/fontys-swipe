@@ -2,18 +2,18 @@ package nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result
 
 import android.support.v4.content.ContextCompat.getColor
 import android.view.View
-import kotlinx.android.synthetic.main.card_statistics.view.*
+import kotlinx.android.synthetic.main.card_result_statistic.view.*
 import nl.fontys.smpt42_1.fontysswipe.R.color.*
-import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticsResult
+import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticResult
 import org.eazegraph.lib.models.PieModel
 
 /**
  * @author SMPT42-1
  */
-class StatisticsResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
+class StatisticResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
 
-    fun set(result: StatisticsResult) = with(itemView) {
-        text_view_statistics_title.text = result.title
+    fun set(result: StatisticResult) = with(itemView) {
+        text_view_statistic_title.text = result.title
 
         val colors = arrayOf(colorFontysPrimary, colorFontysPrimaryDark, colorFontysSecondary, colorFontysBlend)
         var index = 0

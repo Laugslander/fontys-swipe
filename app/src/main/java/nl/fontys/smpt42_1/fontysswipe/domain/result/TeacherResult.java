@@ -7,11 +7,11 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 /**
  * @author SMPT42-1
  */
-public final class TeachersResult extends Result {
+public final class TeacherResult extends Result {
 
     private final List<Teacher> teachers;
 
-    TeachersResult(String title, List<Teacher> teachers) {
+    public TeacherResult(String title, List<Teacher> teachers) {
         super(title);
 
         this.teachers = teachers;

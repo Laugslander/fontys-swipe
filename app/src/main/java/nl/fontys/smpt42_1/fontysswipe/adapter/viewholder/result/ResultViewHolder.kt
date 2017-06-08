@@ -7,5 +7,4 @@ import android.view.View
  * @author SMPT42-1
  */
 abstract class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
 }

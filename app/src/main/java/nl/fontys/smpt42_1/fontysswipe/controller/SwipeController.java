@@ -15,7 +15,8 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
-import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticsResult;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticResult;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
 
 /**
  * @author SMPT42-1
@@ -95,9 +96,9 @@ public final class SwipeController {
         questionCounter++;
 
         for (Route route : routes) {
-            // Check if the answer on the question was positive (yes).
+            // Check if the answer on the question is positive (yes).
             if (answer) {
-                // Add the question total to map of routes and total total.
+                // Add the question points to the user points of the route.
                 int points = question.getPoints().get(route.getAbbreviation());
                 route.addUserPoints(points);
             }
@@ -113,7 +114,8 @@ public final class SwipeController {
     }
 
     private void generateResults() {
-        results.add(new StatisticsResult("Statistieken", getTopRoutes()));
+        results.add(new StatisticResult("Statistics", getTopRoutes()));
+        results.add(new TeacherResult("Teachers", null));
     }
 
     private List<Route> getTopRoutes() {
