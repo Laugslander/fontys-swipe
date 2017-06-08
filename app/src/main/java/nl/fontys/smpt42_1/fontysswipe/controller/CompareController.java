@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
+import nl.fontys.smpt42_1.fontysswipe.util.FindRouteUtilKt;
 
 /**
  * @author SMPT42-1
@@ -45,7 +46,7 @@ class CompareController {
 
             for (final Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
 
-                Route route = FindRouteKt.findRoute(teacherEntry.getKey(), userPoints);
+                Route route = FindRouteUtilKt.findRoute(teacherEntry.getKey(), userPoints);
 
                 int difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
                 differenceMap.put(teacherEntry.getKey(), difference);
