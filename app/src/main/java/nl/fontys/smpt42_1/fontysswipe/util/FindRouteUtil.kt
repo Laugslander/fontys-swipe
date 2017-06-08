@@ -1,4 +1,4 @@
-package nl.fontys.smpt42_1.fontysswipe.controller
+package nl.fontys.smpt42_1.fontysswipe.util
 
 import nl.fontys.smpt42_1.fontysswipe.domain.Route
 

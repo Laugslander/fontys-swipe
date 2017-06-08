@@ -29,6 +29,10 @@ import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
 public final class SwipeController {
 
     private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
+    private static final String STATISTIC_RESULT_TITLE = "Statistics";
+    private static final String TEACHER_RESULT_TITLE = "Teachers";
+    private static final String ACTIVITY_RESULT_TITLE = "Workshops";
+    private static final String PRIZE_RESULT_TITLE = "Prize";
 
     private static SwipeController instance;
 
@@ -130,10 +134,10 @@ public final class SwipeController {
     }
 
     private void generateResults() {
-        results.add(new StatisticResult("Statistics", getTopRoutes()));
-        results.add(new TeacherResult("Teachers", null));
-        results.add(new ActivityResult("Workshops", null));
-        results.add(new PrizeResult("Prize", prize));
+        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, null));
+        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, null));
+        results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 
     private List<Route> getTopRoutes() {
@@ -141,11 +145,17 @@ public final class SwipeController {
         List<Route> routes = new ArrayList<>();
 
         // Poll the top number of routes from the queue and add them to the list.
-        for (int i = 0; i < NUMBER_OF_TOP_ROUTES; i++) {
-            routes.add(queue.poll());
-        }
+        for (int i = 0; i < NUMBER_OF_TOP_ROUTES; i++) routes.add(queue.poll());
 
         return routes;
+    }
+
+    public int getCurrentQuestionCount() {
+        return questionCounter;
+    }
+
+    public int getTotalQuestionsCount() {
+        return questions.size();
     }
 
     public List<Question> getQuestions() {
