@@ -1,5 +1,6 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 
 /**
@@ -32,7 +34,7 @@ class CompareController {
      * @param teachers   all docenten.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
-    public TreeMap<Teacher, Double> compareTeachers(HashMap<String, Integer> userPoints, List<Teacher> teachers) {
+    public TreeMap<Teacher, Double> compareTeachers(ArrayList<Route> userPoints, List<Teacher> teachers) {
         HashMap<String, Integer> differenceMap = new HashMap<>();
         HashMap<Teacher, Double> resultMap = new HashMap<>();
 
@@ -41,14 +43,16 @@ class CompareController {
 
             HashMap<String, Integer> teachersMap = teacher.getPoints();
 
-            for (Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
+            for (final Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
 
-                int difference = Math.abs(userPoints.get(teacherEntry.getKey()) - teacherEntry.getValue());
+                Route route = FindRouteKt.findRoute(teacherEntry.getKey(), userPoints);
+
+                int difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
                 differenceMap.put(teacherEntry.getKey(), difference);
             }
 
-            for (Map.Entry<String, Integer> student : userPoints.entrySet()) {
-                result = result + (differenceMap.get(student.getKey()) * (student.getValue() * 0.1));
+            for (Route route : userPoints) {
+                result = result + (differenceMap.get(route.getName()) * (xroute.getUserPoints() * 0.1));
             }
 
             resultMap.put(teacher, (10 - result) * 10);
