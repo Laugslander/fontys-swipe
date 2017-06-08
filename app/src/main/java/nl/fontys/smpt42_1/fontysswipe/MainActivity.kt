@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.daprlabs.aaron.swipedeck.SwipeDeck
+import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerListener
