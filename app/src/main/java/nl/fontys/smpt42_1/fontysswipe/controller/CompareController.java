@@ -52,7 +52,7 @@ class CompareController {
             }
 
             for (Route route : userPoints) {
-                result = result + (differenceMap.get(route.getName()) * (xroute.getUserPoints() * 0.1));
+                result = result + (differenceMap.get(route.getName()) * (route.getUserPoints() * 0.1));
             }
 
             resultMap.put(teacher, (10 - result) * 10);

@@ -14,6 +14,8 @@ import nl.fontys.smpt42_1.fontysswipe.data.repository.TeacherRepository;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.PrizeResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
@@ -116,6 +118,8 @@ public final class SwipeController {
     private void generateResults() {
         results.add(new StatisticResult("Statistics", getTopRoutes()));
         results.add(new TeacherResult("Teachers", null));
+        results.add(new ActivityResult("Workshops", null));
+        results.add(new PrizeResult("Prize", null));
     }
 
     private List<Route> getTopRoutes() {

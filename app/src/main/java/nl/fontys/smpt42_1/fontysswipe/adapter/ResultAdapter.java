@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import nl.fontys.smpt42_1.fontysswipe.R;
+import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result.ActivityResultViewHolder;
+import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result.PrizeResultViewHolder;
 import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result.ResultViewHolder;
 import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result.StatisticResultViewHolder;
 import nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result.TeacherResultViewHolder;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult;
+import nl.fontys.smpt42_1.fontysswipe.domain.result.PrizeResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.StatisticResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
 
+import static nl.fontys.smpt42_1.fontysswipe.adapter.ViewTypes.ACTIVITY;
+import static nl.fontys.smpt42_1.fontysswipe.adapter.ViewTypes.PRIZE;
 import static nl.fontys.smpt42_1.fontysswipe.adapter.ViewTypes.STATISTIC;
 import static nl.fontys.smpt42_1.fontysswipe.adapter.ViewTypes.TEACHER;
 
@@ -44,8 +50,18 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
                 view = inflater.inflate(R.layout.card_result_teacher, parent, false);
                 viewHolder = new TeacherResultViewHolder(view);
                 break;
+            case ACTIVITY:
+                view = inflater.inflate(R.layout.card_result_activity, parent, false);
+                viewHolder = new ActivityResultViewHolder(view);
+                break;
+
+            case PRIZE:
+                view = inflater.inflate(R.layout.card_result_prize, parent, false);
+                viewHolder = new PrizeResultViewHolder(view);
+                break;
             default:
-                viewHolder = null; // Should never occur.
+                // Should never occur.
+                viewHolder = null;
         }
 
         return viewHolder;
@@ -64,6 +80,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
                 TeacherResultViewHolder teacherResultViewHolder = (TeacherResultViewHolder) holder;
                 teacherResultViewHolder.set((TeacherResult) result);
                 break;
+            case ACTIVITY:
+                ActivityResultViewHolder activityResultViewHolder = (ActivityResultViewHolder) holder;
+                activityResultViewHolder.set((ActivityResult) result);
+                break;
+            case PRIZE:
+                PrizeResultViewHolder prizeResultViewHolder = (PrizeResultViewHolder) holder;
+                prizeResultViewHolder.set((PrizeResult) result);
+                break;
             default:
                 // Should never occur.
         }
@@ -79,6 +103,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
                 break;
             case 1:
                 viewType = TEACHER;
+                break;
+            case 2:
+                viewType = ACTIVITY;
+                break;
+            case 3:
+                viewType = PRIZE;
                 break;
             default:
                 viewType = 0;

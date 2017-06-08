@@ -5,9 +5,8 @@ import java.util.List;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 
 /**
- * @author Robin Laugs
+ * @author SMPT42-1
  */
-
 public final class StatisticResult extends Result {
 
     private List<Route> routes;
