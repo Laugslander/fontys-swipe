@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.daprlabs.aaron.swipedeck.SwipeDeck
-import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerListener
@@ -28,8 +27,8 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
 
     override fun onSwipeControllerInitialized() {
         swipe_deck.setAdapter(SwipeDeckAdapter(controller.questions))
-        swipe_deck.setLeftImage(R.id.left_image)
-        swipe_deck.setRightImage(R.id.right_image)
+        swipe_deck.setLeftImage(R.id.image_view_left)
+        swipe_deck.setRightImage(R.id.image_view_right)
         swipe_deck.setCallback(object : SwipeDeck.SwipeDeckCallback {
             override fun cardSwipedLeft(stableId: Long) = controller.processQuestion(false)
             override fun cardSwipedRight(stableId: Long) = controller.processQuestion(true)

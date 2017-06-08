@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnPrizeReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnRoutesReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
+import nl.fontys.smpt42_1.fontysswipe.data.repository.PrizeRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.QuestionRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.RouteRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.TeacherRepository;
+import nl.fontys.smpt42_1.fontysswipe.domain.Prize;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
@@ -35,6 +38,7 @@ public final class SwipeController {
     private List<Question> questions;
     private List<Teacher> teachers;
     private List<Result> results;
+    private Prize prize;
 
     private int questionCounter;
 
@@ -61,6 +65,7 @@ public final class SwipeController {
         retrieveRoutes();
         retrieveQuestions();
         retrieveTeachers();
+        retrievePrize();
     }
 
     private void retrieveRoutes() {
@@ -92,6 +97,15 @@ public final class SwipeController {
         });
     }
 
+    private void retrievePrize() {
+        new PrizeRepository().getPrize(new OnPrizeReceivedCallback() {
+            @Override
+            public void onPrizeReceived(Prize prize) {
+                SwipeController.this.prize = prize;
+            }
+        });
+    }
+
     public void processQuestion(boolean answer) {
         Question question = questions.get(questionCounter);
 
@@ -119,7 +133,7 @@ public final class SwipeController {
         results.add(new StatisticResult("Statistics", getTopRoutes()));
         results.add(new TeacherResult("Teachers", null));
         results.add(new ActivityResult("Workshops", null));
-        results.add(new PrizeResult("Prize", null));
+        results.add(new PrizeResult("Prize", prize));
     }
 
     private List<Route> getTopRoutes() {

@@ -5,15 +5,20 @@ package nl.fontys.smpt42_1.fontysswipe.domain;
  */
 public class Prize {
 
-    private String name;
+    private String image;
+    private String catchphrase;
     private String description;
 
     public Prize() {
         // Empty constructor used for Firebase binding.
     }
 
-    public String getName() {
-        return name;
+    public String getImage() {
+        return image;
+    }
+
+    public String getCatchphrase() {
+        return catchphrase;
     }
 
     public String getDescription() {
