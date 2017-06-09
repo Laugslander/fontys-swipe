@@ -31,14 +31,27 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
         swipe_deck.setLeftImage(R.id.image_view_left)
         swipe_deck.setRightImage(R.id.image_view_right)
         swipe_deck.setCallback(object : SwipeDeck.SwipeDeckCallback {
-            override fun cardSwipedLeft(stableId: Long) = controller.processQuestion(false)
-            override fun cardSwipedRight(stableId: Long) = controller.processQuestion(true)
+            override fun cardSwipedLeft(stableId: Long) {
+                controller.processQuestion(false); number_progress_bar.progress = getProgressPercentage()
+            }
+
+            override fun cardSwipedRight(stableId: Long) {
+                controller.processQuestion(true); number_progress_bar.progress = getProgressPercentage()
+            }
         })
 
-        image_button_swipe_left.setOnClickListener({ swipe_deck.swipeTopCardLeft(0) })
-        image_button_swipe_right.setOnClickListener({ swipe_deck.swipeTopCardRight(0) })
+        number_progress_bar.max = 100
+        image_button_swipe_left.setOnClickListener({ swipe_deck.swipeTopCardLeft(0); number_progress_bar.progress = getProgressPercentage() })
+        image_button_swipe_right.setOnClickListener({ swipe_deck.swipeTopCardRight(0); number_progress_bar.progress = getProgressPercentage() })
 
         showViewElements(true)
+    }
+
+    private fun getProgressPercentage(): Int {
+        val totalQuestionCount = SwipeController.getInstance().totalQuestionsCount.toDouble()
+        val currentQuestionCount = SwipeController.getInstance().currentQuestionCount.toDouble()
+        val percentage = ((currentQuestionCount / totalQuestionCount) * 100).toInt()
+        return percentage
     }
 
     override fun onAllQuestionsProcessed() {
@@ -51,6 +64,7 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
         progress_bar.visibility = if (show) INVISIBLE else VISIBLE
         image_button_swipe_left.visibility = if (show) VISIBLE else INVISIBLE
         image_button_swipe_right.visibility = if (show) VISIBLE else INVISIBLE
+        number_progress_bar.visibility = if (show) VISIBLE else INVISIBLE
     }
 
 }
