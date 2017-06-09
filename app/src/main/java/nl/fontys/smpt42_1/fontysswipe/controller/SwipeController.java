@@ -5,14 +5,17 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnActivitiesReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnPrizeReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnRoutesReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
+import nl.fontys.smpt42_1.fontysswipe.data.repository.ActivityRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.PrizeRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.QuestionRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.RouteRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.TeacherRepository;
+import nl.fontys.smpt42_1.fontysswipe.domain.Activity;
 import nl.fontys.smpt42_1.fontysswipe.domain.Prize;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
@@ -30,9 +33,9 @@ public final class SwipeController {
 
     private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
     private static final String STATISTIC_RESULT_TITLE = "Statistics";
-    private static final String TEACHER_RESULT_TITLE = "Teachers";
-    private static final String ACTIVITY_RESULT_TITLE = "Workshops";
-    private static final String PRIZE_RESULT_TITLE = "Prize";
+    private static final String TEACHER_RESULT_TITLE = "Teachers to talk with";
+    private static final String ACTIVITY_RESULT_TITLE = "Workshops to attend";
+    private static final String PRIZE_RESULT_TITLE = "Win the prize";
 
     private static SwipeController instance;
 
@@ -42,6 +45,7 @@ public final class SwipeController {
     private List<Question> questions;
     private List<Teacher> teachers;
     private List<Result> results;
+    private List<Activity> activities;
     private Prize prize;
 
     private int questionCounter;
@@ -69,6 +73,7 @@ public final class SwipeController {
         retrieveRoutes();
         retrieveQuestions();
         retrieveTeachers();
+        retrieveActivities();
         retrievePrize();
     }
 
@@ -97,6 +102,15 @@ public final class SwipeController {
             @Override
             public void onTeachersReceived(List<Teacher> teachers) {
                 SwipeController.this.teachers = teachers;
+            }
+        });
+    }
+
+    private void retrieveActivities() {
+        new ActivityRepository().getActivities(new OnActivitiesReceivedCallback() {
+            @Override
+            public void onActivitiesReceived(List<Activity> activities) {
+                SwipeController.this.activities = activities;
             }
         });
     }
@@ -135,8 +149,8 @@ public final class SwipeController {
 
     private void generateResults() {
         results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
-        results.add(new TeacherResult(TEACHER_RESULT_TITLE, null));
-        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, null));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers));
+        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 

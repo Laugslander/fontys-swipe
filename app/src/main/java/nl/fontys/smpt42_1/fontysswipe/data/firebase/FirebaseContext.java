@@ -13,6 +13,7 @@ abstract class FirebaseContext {
     private final String QUESTIONS_REFERENCE = "questions";
     private final String ROUTES_REFERENCE = "routes";
     private final String TEACHERS_REFERENCE = "teachers";
+    private final String ACTIVITIES_REFERENCE = "activities";
     private final String PRIZE_REFERENCE = "prize";
 
     private final FirebaseDatabase database;
@@ -33,6 +34,10 @@ abstract class FirebaseContext {
 
     DatabaseReference getTeachersDatabaseReference() {
         return database.getReference(TEACHERS_REFERENCE);
+    }
+
+    DatabaseReference getActivitiesDatabaseReference() {
+        return database.getReference(ACTIVITIES_REFERENCE);
     }
 
     DatabaseReference getPrizeDatabaseReference() {

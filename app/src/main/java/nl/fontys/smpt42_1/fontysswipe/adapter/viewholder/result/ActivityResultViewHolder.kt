@@ -2,6 +2,7 @@ package nl.fontys.smpt42_1.fontysswipe.adapter.viewholder.result
 
 import android.view.View
 import kotlinx.android.synthetic.main.card_result_activity.view.*
+import nl.fontys.smpt42_1.fontysswipe.adapter.ActivityAdapter
 import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult
 
 /**
@@ -11,6 +12,7 @@ class ActivityResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
 
     fun set(result: ActivityResult) = with(itemView) {
         text_view_activity_title.text = result.title
+        list_view_activities.adapter = ActivityAdapter(itemView.context, result.activities)
     }
 
 }

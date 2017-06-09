@@ -1,8 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.domain.result;
 
-import android.app.Activity;
-
 import java.util.List;
+
+import nl.fontys.smpt42_1.fontysswipe.domain.Activity;
 
 /**
  * @author SMPT42-1

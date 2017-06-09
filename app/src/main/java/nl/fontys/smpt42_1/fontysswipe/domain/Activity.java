@@ -5,14 +5,14 @@ package nl.fontys.smpt42_1.fontysswipe.domain;
  */
 public class Activity {
 
-    private String name;
+    private String title;
 
     public Activity() {
         // Empty constructor used for Firebase binding.
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
 }
