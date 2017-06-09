@@ -17,4 +17,10 @@
         <item name="android:textColor">@color/colorFontysPrimary</item>
     </style>
 
+    <style name="HorizontalProgressBarStyle">
+        <item name="custom:progress_reached_color">@color/colorFontysPrimary</item>
+        <item name="custom:progress_text_color">@color/colorFontysPrimaryDark</item>
+        <item name="progress_max">100</item>
+    </style>
+
 </resources>
