@@ -5,4 +5,5 @@
     <color name="colorFontysSecondary">#e5007d</color>
     <color name="colorFontysBlend">#A61A72</color>
     <color name="colorBackground">#EFEFEF</color>
+    <color name="colorProfilePictureBorder">#BDBDBD</color>
 </resources>
