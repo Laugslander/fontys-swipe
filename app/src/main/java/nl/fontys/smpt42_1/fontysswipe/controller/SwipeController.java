@@ -9,16 +9,19 @@ import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnActivitiesReceive
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnPrizeReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnQuestionsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnRoutesReceivedCallback;
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnSchoolsReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.ActivityRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.PrizeRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.QuestionRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.RouteRepository;
+import nl.fontys.smpt42_1.fontysswipe.data.repository.SchoolRepository;
 import nl.fontys.smpt42_1.fontysswipe.data.repository.TeacherRepository;
 import nl.fontys.smpt42_1.fontysswipe.domain.Activity;
 import nl.fontys.smpt42_1.fontysswipe.domain.Prize;
 import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
+import nl.fontys.smpt42_1.fontysswipe.domain.School;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.PrizeResult;
@@ -39,29 +42,32 @@ public final class SwipeController {
 
     private static SwipeController instance;
 
-    private SwipeControllerListener listener;
+    private SwipeControllerMainListener mainListener;
+    private SwipeControllerResultListener resultListener;
+    private LocationController location;
 
-    private List<Route> routes;
     private List<Question> questions;
+    private List<Route> routes;
     private List<Teacher> teachers;
     private List<Result> results;
     private List<Activity> activities;
     private Prize prize;
 
+    private School school;
     private int questionCounter;
 
-    private SwipeController(SwipeControllerListener listener) {
-        this.listener = listener;
+    private SwipeController(SwipeControllerMainListener listener) {
+        mainListener = listener;
 
         results = new ArrayList<>();
 
         questionCounter = 0;
 
-        retrieveData();
+        retrieveAppData();
     }
 
-    public static SwipeController createInstance(SwipeControllerListener delegate) {
-        instance = new SwipeController(delegate);
+    public static SwipeController setInstance(SwipeControllerMainListener listener) {
+        instance = new SwipeController(listener);
         return instance;
     }
 
@@ -69,12 +75,39 @@ public final class SwipeController {
         return instance;
     }
 
-    private void retrieveData() {
-        retrieveRoutes();
+    public void setSwipeControllerResultListener(SwipeControllerResultListener listener) {
+        resultListener = listener;
+    }
+
+    private void retrieveAppData() {
+        retrieveLocations();
         retrieveQuestions();
+        retrieveRoutes();
         retrieveTeachers();
         retrieveActivities();
         retrievePrize();
+    }
+
+    private void retrieveLocations() {
+        new SchoolRepository().getLocations(new OnSchoolsReceivedCallback() {
+            @Override
+            public void onSchoolsReceived(List<School> schools) {
+                // Check at which school location the app user is.
+                location = new LocationController((android.app.Activity) mainListener, schools);
+                // school = location.getSchoolLocation();
+            }
+        });
+    }
+
+    private void retrieveQuestions() {
+        new QuestionRepository().getQuestions(new OnQuestionsReceivedCallback() {
+            @Override
+            public void onQuestionsReceived(List<Question> questions) {
+                SwipeController.this.questions = questions;
+                // Notify the MainActivity that the location data is retrieved.
+                mainListener.onSwipeControllerInitialized();
+            }
+        });
     }
 
     private void retrieveRoutes() {
@@ -86,22 +119,12 @@ public final class SwipeController {
         });
     }
 
-    private void retrieveQuestions() {
-        new QuestionRepository().getQuestions(new OnQuestionsReceivedCallback() {
-            @Override
-            public void onQuestionsReceived(List<Question> questions) {
-                SwipeController.this.questions = questions;
-                // Notify the MainActivity when the question data is loaded.
-                listener.onSwipeControllerInitialized();
-            }
-        });
-    }
-
     private void retrieveTeachers() {
         new TeacherRepository().getTeachers(new OnTeachersReceivedCallback() {
             @Override
             public void onTeachersReceived(List<Teacher> teachers) {
                 SwipeController.this.teachers = teachers;
+                updateResults();
             }
         });
     }
@@ -111,6 +134,7 @@ public final class SwipeController {
             @Override
             public void onActivitiesReceived(List<Activity> activities) {
                 SwipeController.this.activities = activities;
+                updateResults();
             }
         });
     }
@@ -120,8 +144,18 @@ public final class SwipeController {
             @Override
             public void onPrizeReceived(Prize prize) {
                 SwipeController.this.prize = prize;
+                updateResults();
             }
         });
+    }
+
+    private void updateResults() {
+        if (resultListener != null) {
+            // Regenerate the results.
+            generateResults();
+            // Notify the ResultActivity that the results have changed.
+            resultListener.onResultsUpdated();
+        }
     }
 
     public void processQuestion(boolean answer) {
@@ -142,12 +176,13 @@ public final class SwipeController {
         if (questionCounter == questions.size()) {
             // Generate the results.
             generateResults();
-            // Notify the MainActivity when all questions are processed.
-            listener.onAllQuestionsProcessed();
+            // Notify the MainActivity that all questions are processed.
+            mainListener.onAllQuestionsProcessed();
         }
     }
 
     private void generateResults() {
+        results.clear();
         results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
         results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers));
         results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
@@ -164,12 +199,9 @@ public final class SwipeController {
         return routes;
     }
 
-    public int getCurrentQuestionCount() {
-        return questionCounter;
-    }
-
-    public int getTotalQuestionsCount() {
-        return questions.size();
+    public int getQuestionsProgress() {
+        double percentage = ((double) questionCounter / questions.size()) * 100;
+        return (int) percentage;
     }
 
     public List<Question> getQuestions() {

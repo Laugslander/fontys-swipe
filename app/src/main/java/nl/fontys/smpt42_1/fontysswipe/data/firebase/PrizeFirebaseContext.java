@@ -24,7 +24,7 @@ public class PrizeFirebaseContext extends FirebaseContext implements PrizeContra
 
     @Override
     public void getPrize(final OnPrizeReceivedCallback callback) {
-        getPrizeDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        getPrizeDatabaseReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Prize prize = dataSnapshot.getValue(Prize.class);

@@ -3,7 +3,7 @@ package nl.fontys.smpt42_1.fontysswipe.controller;
 /**
  * @author SMPT42-1
  */
-public interface SwipeControllerListener {
+public interface SwipeControllerMainListener {
 
     void onSwipeControllerInitialized();
 

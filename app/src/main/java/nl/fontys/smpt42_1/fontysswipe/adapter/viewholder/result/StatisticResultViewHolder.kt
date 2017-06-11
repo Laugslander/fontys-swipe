@@ -18,6 +18,8 @@ class StatisticResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
         val colors = arrayOf(colorFontysPrimary, colorFontysPrimaryDark, colorFontysSecondary, colorFontysBlend)
         var index = 0
 
+        pie_chart.clearChart()
+
         result.routes.forEach { route ->
             if (index == colors.size - 1) index = 0 else index++ // Select a random colors index.
             pie_chart.addPieSlice(PieModel(String.format("ICT & %s", route.name), route.userPoints.toFloat(), getColor(context, colors[index])))

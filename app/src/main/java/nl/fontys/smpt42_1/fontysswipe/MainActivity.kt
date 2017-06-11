@@ -10,14 +10,14 @@ import com.daprlabs.aaron.swipedeck.SwipeDeck
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.fontys.smpt42_1.fontysswipe.adapter.SwipeDeckAdapter
 import nl.fontys.smpt42_1.fontysswipe.controller.SwipeController
-import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerListener
+import nl.fontys.smpt42_1.fontysswipe.controller.SwipeControllerMainListener
 
 /**
  * @author SMPT42-1
  */
-class MainActivity : AppCompatActivity(), SwipeControllerListener {
+class MainActivity : AppCompatActivity(), SwipeControllerMainListener {
 
-    val controller: SwipeController = SwipeController.createInstance(this)
+    val controller: SwipeController = SwipeController.setInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,26 +32,21 @@ class MainActivity : AppCompatActivity(), SwipeControllerListener {
         swipe_deck.setRightImage(R.id.image_view_right)
         swipe_deck.setCallback(object : SwipeDeck.SwipeDeckCallback {
             override fun cardSwipedLeft(stableId: Long) {
-                controller.processQuestion(false); number_progress_bar.progress = getProgressPercentage()
+                controller.processQuestion(false)
+                number_progress_bar.progress = controller.questionsProgress
             }
 
             override fun cardSwipedRight(stableId: Long) {
-                controller.processQuestion(true); number_progress_bar.progress = getProgressPercentage()
+                controller.processQuestion(true)
+                number_progress_bar.progress = controller.questionsProgress
             }
         })
 
         number_progress_bar.max = 100
-        image_button_swipe_left.setOnClickListener({ swipe_deck.swipeTopCardLeft(0); number_progress_bar.progress = getProgressPercentage() })
-        image_button_swipe_right.setOnClickListener({ swipe_deck.swipeTopCardRight(0); number_progress_bar.progress = getProgressPercentage() })
+        image_button_swipe_left.setOnClickListener { swipe_deck.swipeTopCardLeft(0) }
+        image_button_swipe_right.setOnClickListener { swipe_deck.swipeTopCardRight(0) }
 
         showViewElements(true)
-    }
-
-    private fun getProgressPercentage(): Int {
-        val totalQuestionCount = SwipeController.getInstance().totalQuestionsCount.toDouble()
-        val currentQuestionCount = SwipeController.getInstance().currentQuestionCount.toDouble()
-        val percentage = ((currentQuestionCount / totalQuestionCount) * 100).toInt()
-        return percentage
     }
 
     override fun onAllQuestionsProcessed() {

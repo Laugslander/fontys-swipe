@@ -23,7 +23,7 @@ public class TeacherFirebaseContext extends FirebaseContext implements TeacherCo
 
     @Override
     public void getTeachers(final OnTeachersReceivedCallback callback) {
-        getTeachersDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        getTeachersDatabaseReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Teacher> teachers = new ArrayList<>();

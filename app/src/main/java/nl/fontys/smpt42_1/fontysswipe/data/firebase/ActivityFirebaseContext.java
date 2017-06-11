@@ -22,7 +22,7 @@ public final class ActivityFirebaseContext extends FirebaseContext implements Ac
 
     @Override
     public void getActivities(final OnActivitiesReceivedCallback callback) {
-        getActivitiesDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+        getActivitiesDatabaseReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Activity> activities = new ArrayList<>();
