@@ -10,11 +10,12 @@ import com.google.firebase.storage.StorageReference;
  */
 abstract class FirebaseContext {
 
-    private final String QUESTIONS_REFERENCE = "questions";
-    private final String ROUTES_REFERENCE = "routes";
-    private final String TEACHERS_REFERENCE = "teachers";
-    private final String ACTIVITIES_REFERENCE = "activities";
-    private final String PRIZE_REFERENCE = "prize";
+    private static final String QUESTIONS_REFERENCE = "questions";
+    private static final String ROUTES_REFERENCE = "routes";
+    private static final String TEACHERS_REFERENCE = "teachers";
+    private static final String ACTIVITIES_REFERENCE = "activities";
+    private static final String SCHOOLS_REFERENCE = "schools";
+    private static final String PRIZE_REFERENCE = "prize";
 
     private final FirebaseDatabase database;
     private final FirebaseStorage storage;
@@ -38,6 +39,10 @@ abstract class FirebaseContext {
 
     DatabaseReference getActivitiesDatabaseReference() {
         return database.getReference(ACTIVITIES_REFERENCE);
+    }
+
+    DatabaseReference getSchoolsDatabaseReference() {
+        return database.getReference(SCHOOLS_REFERENCE);
     }
 
     DatabaseReference getPrizeDatabaseReference() {
