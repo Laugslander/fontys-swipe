@@ -94,7 +94,7 @@ public final class SwipeController {
             public void onSchoolsReceived(List<School> schools) {
                 // Check at which school location the app user is.
                 location = new LocationController((android.app.Activity) mainListener, schools);
-                // school = location.getSchoolLocation();
+                school = location.getSchoolLocation();
             }
         });
     }

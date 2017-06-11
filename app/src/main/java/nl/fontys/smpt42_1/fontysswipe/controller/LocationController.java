@@ -28,10 +28,11 @@ class LocationController {
 
     private static final Logger logger = Logger.getLogger(LocationController.class.getSimpleName());
 
-    private static int REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 0;
     private static final String GPS_SERVICE = "gps";
-    private static final int NUMBER_OF_GEOCODER_RESULTS = 1;
+    private static final int GEOCODER_RESULTS = 1;
     private static final int GEOCODER_RESULT_INDEX = 0;
+    private static final String FALLBACK_LOCATION = "Eindhoven";
 
     private final Activity activity;
     private final List<School> schools;
@@ -49,13 +50,15 @@ class LocationController {
             return getSchoolLocation();
         }
 
-        String city = "";
+        String city;
         try {
             LocationManager manager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
             Location location = manager.getLastKnownLocation(GPS_SERVICE);
-            city = new Geocoder(activity).getFromLocation(location.getLatitude(), location.getLongitude(), NUMBER_OF_GEOCODER_RESULTS).get(GEOCODER_RESULT_INDEX).getLocality();
-        } catch (IOException e) {
+            city = new Geocoder(activity).getFromLocation(location.getLatitude(), location.getLongitude(), GEOCODER_RESULTS).get(GEOCODER_RESULT_INDEX).getLocality();
+        } catch (IOException | NullPointerException e) {
             logger.log(Level.SEVERE, "An error occurred while retrieving the location.", e);
+            // Use fallback location
+            city = FALLBACK_LOCATION;
         }
 
         for (School school : schools) {
