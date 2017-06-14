@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import nl.fontys.smpt42_1.fontysswipe.domain.Interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 import nl.fontys.smpt42_1.fontysswipe.util.FindRouteUtilKt;
@@ -32,17 +33,17 @@ class CompareController {
      * Compare teacher methode compared alle docenten met 1 student en kijkt voor alle docenten welke docenten de beste match is.
      *
      * @param userPoints een hashmap met de studie profielen en het aantal punten dat de gebruiker daarbij heeft.
-     * @param teachers   all docenten.
+     * @param comparables   all comparable objects.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
-    public TreeMap<Teacher, Double> compareTeachers(ArrayList<Route> userPoints, List<Teacher> teachers) {
+    public TreeMap<CompareAlgo, Double> compareTeachers (ArrayList<Route> userPoints, List<CompareAlgo> comparables) {
         HashMap<String, Integer> differenceMap = new HashMap<>();
-        HashMap<Teacher, Double> resultMap = new HashMap<>();
+        HashMap<CompareAlgo, Double> resultMap = new HashMap<>();
 
-        for (Teacher teacher : teachers) {
+        for (CompareAlgo comparable : comparables) {
             double result = 0;
 
-            HashMap<String, Integer> teachersMap = teacher.getPoints();
+            HashMap<String, Integer> teachersMap = comparable.getPoints();
 
             for (final Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
 
@@ -56,10 +57,10 @@ class CompareController {
                 result = result + (differenceMap.get(route.getName()) * (route.getUserPoints() * 0.1));
             }
 
-            resultMap.put(teacher, (10 - result) * 10);
+            resultMap.put(comparable, (10 - result) * 10);
         }
 
-        return (TreeMap<Teacher, Double>) entriesSortedByValues(resultMap);
+        return (TreeMap<CompareAlgo, Double>) entriesSortedByValues(resultMap);
     }
 
     private static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
