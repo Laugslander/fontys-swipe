@@ -2,10 +2,12 @@ package nl.fontys.smpt42_1.fontysswipe.domain;
 
 import java.util.HashMap;
 
+import nl.fontys.smpt42_1.fontysswipe.domain.Interfaces.CompareAlgo;
+
 /**
  * @author SMPT42-1
  */
-public class Teacher {
+public class Teacher implements CompareAlgo{
 
     private String id;
     private String name;
@@ -38,6 +40,7 @@ public class Teacher {
         return image;
     }
 
+    @Override
     public HashMap<String, Integer> getPoints() {
         return points;
     }
