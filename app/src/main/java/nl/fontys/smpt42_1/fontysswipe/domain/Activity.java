@@ -3,17 +3,15 @@ package nl.fontys.smpt42_1.fontysswipe.domain;
 import java.util.List;
 import java.util.Map;
 
-import java.util.HashMap;
-
-import nl.fontys.smpt42_1.fontysswipe.domain.Interfaces.CompareAlgo;
+import nl.fontys.smpt42_1.fontysswipe.domain.interfaces.CompareAlgo;
 
 /**
  * @author SMPT42-1
  */
-public class Activity implements CompareAlgo{
+public class Activity implements CompareAlgo {
 
-    private HashMap<String, Integer> points;
     private String title;
+    private Map<String, Integer> points;
     private Map<String, List<String>> timetable;
 
     public Activity() {
@@ -29,7 +27,8 @@ public class Activity implements CompareAlgo{
     }
 
     @Override
-    public HashMap<String, Integer> getPoints() {
+    public Map<String, Integer> getPoints() {
         return points;
     }
+
 }

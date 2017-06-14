@@ -9,9 +9,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import nl.fontys.smpt42_1.fontysswipe.domain.Interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
-import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
+import nl.fontys.smpt42_1.fontysswipe.domain.interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.util.FindRouteUtilKt;
 
 /**
@@ -36,14 +35,14 @@ class CompareController {
      * @param comparables   all comparable objects.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
-    public TreeMap<CompareAlgo, Double> compareTeachers (ArrayList<Route> userPoints, List<CompareAlgo> comparables) {
+    public TreeMap<CompareAlgo, Double> compareTeachers(ArrayList<Route> userPoints, List<CompareAlgo> comparables) {
         HashMap<String, Integer> differenceMap = new HashMap<>();
         HashMap<CompareAlgo, Double> resultMap = new HashMap<>();
 
         for (CompareAlgo comparable : comparables) {
             double result = 0;
 
-            HashMap<String, Integer> teachersMap = comparable.getPoints();
+            Map<String, Integer> teachersMap = comparable.getPoints();
 
             for (final Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
 
