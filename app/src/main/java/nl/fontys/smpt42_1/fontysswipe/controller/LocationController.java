@@ -3,7 +3,9 @@ package nl.fontys.smpt42_1.fontysswipe.controller;
 import android.app.Activity;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
 import java.io.IOException;
@@ -24,15 +26,16 @@ import static android.os.Build.VERSION_CODES;
 /**
  * @author SMPT42-1
  */
-class LocationController {
+class LocationController implements LocationListener {
 
     private static final Logger logger = Logger.getLogger(LocationController.class.getSimpleName());
 
     private static final int REQUEST_CODE = 0;
     private static final String GPS_SERVICE = "gps";
+    private static final int MIN_GPS_TIME = 0;
+    private static final int MIN_GPS_DISTANCE = 0;
     private static final int GEOCODER_RESULTS = 1;
     private static final int GEOCODER_RESULT_INDEX = 0;
-    private static final String FALLBACK_LOCATION = "Eindhoven";
 
     private final Activity activity;
     private final List<School> schools;
@@ -50,15 +53,14 @@ class LocationController {
             return getSchoolLocation();
         }
 
-        String city;
+        String city = "";
         try {
             LocationManager manager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
+            manager.requestLocationUpdates(GPS_SERVICE, MIN_GPS_TIME, MIN_GPS_DISTANCE, this);
             Location location = manager.getLastKnownLocation(GPS_SERVICE);
             city = new Geocoder(activity).getFromLocation(location.getLatitude(), location.getLongitude(), GEOCODER_RESULTS).get(GEOCODER_RESULT_INDEX).getLocality();
         } catch (IOException | NullPointerException e) {
             logger.log(Level.SEVERE, "An error occurred while retrieving the location.", e);
-            // Use fallback location
-            city = FALLBACK_LOCATION;
         }
 
         for (School school : schools) {
@@ -67,6 +69,26 @@ class LocationController {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Do nothing.
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // Do nothing.
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        // Do nothing.
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        // Do nothing.
     }
 
 }

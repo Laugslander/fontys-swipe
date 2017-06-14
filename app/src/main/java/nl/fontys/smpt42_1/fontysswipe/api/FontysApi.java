@@ -10,7 +10,7 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 /**
  * @author SMPT42-1
  */
-public class FontysAPI {
+public class FontysApi {
 
     private String accessToken;
 

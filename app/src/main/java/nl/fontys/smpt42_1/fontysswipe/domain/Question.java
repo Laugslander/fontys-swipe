@@ -23,6 +23,10 @@ public class Question {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Map<String, Integer> getPoints() {
         return points;
     }

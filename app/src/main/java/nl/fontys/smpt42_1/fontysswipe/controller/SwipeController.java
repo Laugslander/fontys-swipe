@@ -63,7 +63,7 @@ public final class SwipeController {
 
         questionCounter = 0;
 
-        retrieveAppData();
+        retrieveData();
     }
 
     public static SwipeController setInstance(SwipeControllerMainListener listener) {
@@ -79,33 +79,34 @@ public final class SwipeController {
         resultListener = listener;
     }
 
-    private void retrieveAppData() {
-        retrieveLocations();
-        retrieveQuestions();
+    private void retrieveData() {
+        retrieveInitialData();
         retrieveRoutes();
         retrieveTeachers();
         retrieveActivities();
         retrievePrize();
     }
 
-    private void retrieveLocations() {
+    private void retrieveInitialData() {
         new SchoolRepository().getLocations(new OnSchoolsReceivedCallback() {
             @Override
             public void onSchoolsReceived(List<School> schools) {
                 // Check at which school location the app user is.
                 location = new LocationController((android.app.Activity) mainListener, schools);
                 school = location.getSchoolLocation();
-            }
-        });
-    }
 
-    private void retrieveQuestions() {
-        new QuestionRepository().getQuestions(new OnQuestionsReceivedCallback() {
-            @Override
-            public void onQuestionsReceived(List<Question> questions) {
-                SwipeController.this.questions = questions;
-                // Notify the MainActivity that the location data is retrieved.
-                mainListener.onSwipeControllerInitialized();
+                new QuestionRepository().getQuestions(new OnQuestionsReceivedCallback() {
+                    @Override
+                    public void onQuestionsReceived(List<Question> questions) {
+                        SwipeController.this.questions = questions;
+
+                        Question initialInfoQuestion = questions.get(0);
+                        initialInfoQuestion.setText(String.format(initialInfoQuestion.getText(), school.getCity()));
+
+                        // Notify the MainActivity that the location data is retrieved.
+                        mainListener.onSwipeControllerInitialized();
+                    }
+                });
             }
         });
     }
