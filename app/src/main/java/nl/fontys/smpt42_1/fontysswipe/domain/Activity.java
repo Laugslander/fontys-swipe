@@ -31,4 +31,9 @@ public class Activity implements CompareAlgo {
         return points;
     }
 
+    @Override
+    public String getName() {
+        return title;
+    }
+
 }
