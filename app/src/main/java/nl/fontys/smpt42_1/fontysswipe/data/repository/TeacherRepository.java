@@ -1,6 +1,7 @@
 package nl.fontys.smpt42_1.fontysswipe.data.repository;
 
 import nl.fontys.smpt42_1.fontysswipe.data.contract.TeacherContract;
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeacherImageLinkReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
 
 /**
@@ -16,6 +17,10 @@ public class TeacherRepository {
 
     public void getTeachers(OnTeachersReceivedCallback callback) {
         context.getTeachers(callback);
+    }
+
+    public void getTeacherImageUri(String image, OnTeacherImageLinkReceivedCallback callback) {
+        context.getTeacherImageUri(image, callback);
     }
 
 }

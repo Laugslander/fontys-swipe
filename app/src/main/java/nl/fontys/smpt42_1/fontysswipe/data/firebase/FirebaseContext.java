@@ -53,6 +53,10 @@ abstract class FirebaseContext {
         return storage.getReference(QUESTIONS_REFERENCE);
     }
 
+    StorageReference getTeachersStorageReference() {
+        return storage.getReference(TEACHERS_REFERENCE);
+    }
+
     StorageReference getPrizeStorageReference() {
         return storage.getReference(PRIZE_REFERENCE);
     }

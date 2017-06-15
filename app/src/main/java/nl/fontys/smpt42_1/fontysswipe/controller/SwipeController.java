@@ -187,6 +187,8 @@ public final class SwipeController {
         results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
         results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers));
         results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
+
+        // TODO set prize location
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 

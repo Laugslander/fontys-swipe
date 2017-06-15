@@ -1,5 +1,6 @@
 package nl.fontys.smpt42_1.fontysswipe.data.contract;
 
+import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeacherImageLinkReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedCallback;
 
 /**
@@ -8,5 +9,7 @@ import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnTeachersReceivedC
 public interface TeacherContract {
 
     void getTeachers(OnTeachersReceivedCallback callback);
+
+    void getTeacherImageUri(String image, OnTeacherImageLinkReceivedCallback callback);
 
 }
