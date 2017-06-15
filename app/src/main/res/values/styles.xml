@@ -9,12 +9,12 @@
         <item name="android:colorBackground">@color/colorFontysPrimary</item>
     </style>
 
-    <style name="TextTitle">
-        <item name="android:textSize">18sp</item>
+    <style name="TextColor">
+        <item name="android:textColor">@color/colorFontysPrimary</item>
     </style>
 
-    <style name="TextTitleColor" parent="TextTitle">
-        <item name="android:textColor">@color/colorFontysPrimary</item>
+    <style name="TextTitle" parent="TextColor">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="HorizontalProgressBarStyle" parent="NumberProgressBar_Default">

@@ -55,4 +55,5 @@ public class ActivityAdapter extends ArrayAdapter<Activity> {
     public int getCount() {
         return activities.size() < NUMBER_OF_ACTIVITIES_TO_SHOW ? activities.size() : NUMBER_OF_ACTIVITIES_TO_SHOW;
     }
+
 }
