@@ -21,13 +21,11 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
 
     private static final int NUMBER_OF_TEACHERS_TO_SHOW = 3;
 
-    private Context context;
     private List<Teacher> teachers;
 
     public TeacherAdapter(Context context, List<Teacher> teachers) {
         super(context, R.layout.list_item_teacher, teachers);
 
-        this.context = context;
         this.teachers = teachers;
     }
 
@@ -57,4 +55,5 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
     public int getCount() {
         return teachers.size() < NUMBER_OF_TEACHERS_TO_SHOW ? teachers.size() : NUMBER_OF_TEACHERS_TO_SHOW;
     }
+
 }

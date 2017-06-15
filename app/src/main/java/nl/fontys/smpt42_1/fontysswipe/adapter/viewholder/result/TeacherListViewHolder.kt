@@ -5,7 +5,7 @@ import kotlinx.android.synthetic.main.list_item_teacher.view.*
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher
 
 /**
- * @author Robin Laugs
+ * @author SMPT42-1
  */
 class TeacherListViewHolder(val itemView: View) {
 

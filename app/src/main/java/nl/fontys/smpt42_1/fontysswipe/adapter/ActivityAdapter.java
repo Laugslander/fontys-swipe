@@ -19,15 +19,13 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Activity;
  */
 public class ActivityAdapter extends ArrayAdapter<Activity> {
 
-    private static final int NUMBER_OF_ACTIVITIES_TO_SHOW = 2;
+    private static final int NUMBER_OF_ACTIVITIES_TO_SHOW = 3;
 
-    private Context context;
     private List<Activity> activities;
 
     public ActivityAdapter(Context context, List<Activity> activities) {
         super(context, R.layout.list_item_activity, activities);
 
-        this.context = context;
         this.activities = activities;
     }
 
