@@ -19,6 +19,8 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
  */
 public class TeacherAdapter extends ArrayAdapter<Teacher> {
 
+    private static final boolean TIMETABLE_CLICKABLE = false;
+
     private static final int NUMBER_OF_TEACHERS_TO_SHOW = 3;
 
     private List<Teacher> teachers;
@@ -54,6 +56,11 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
     @Override
     public int getCount() {
         return teachers.size() < NUMBER_OF_TEACHERS_TO_SHOW ? teachers.size() : NUMBER_OF_TEACHERS_TO_SHOW;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return TIMETABLE_CLICKABLE;
     }
 
 }

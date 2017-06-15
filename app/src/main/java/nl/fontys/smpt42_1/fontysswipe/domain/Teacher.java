@@ -13,6 +13,7 @@ public class Teacher implements CompareAlgo {
     private String name;
     private String email;
     private String phone;
+    private String location;
     private String image;
     private Map<String, Integer> points;
 
@@ -34,6 +35,10 @@ public class Teacher implements CompareAlgo {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public String getImage() {

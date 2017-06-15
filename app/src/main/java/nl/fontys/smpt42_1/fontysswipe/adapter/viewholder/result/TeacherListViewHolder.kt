@@ -14,6 +14,7 @@ class TeacherListViewHolder(val itemView: View) {
     fun set(teacher: Teacher) = with(itemView) {
         TeacherRepository().getTeacherImageUri(teacher.image, { uri -> Picasso.with(context).load(uri).into(image_view_teacher) })
         text_view_teacher_name.text = teacher.name
+        text_view_teacher_location.text = teacher.location
     }
 
 }
