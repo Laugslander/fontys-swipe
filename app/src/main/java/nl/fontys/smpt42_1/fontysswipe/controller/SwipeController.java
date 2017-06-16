@@ -2,8 +2,6 @@ package nl.fontys.smpt42_1.fontysswipe.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnActivitiesReceivedCallback;
 import nl.fontys.smpt42_1.fontysswipe.data.contract.callback.OnPrizeReceivedCallback;
@@ -23,7 +21,6 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.School;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
-import nl.fontys.smpt42_1.fontysswipe.domain.interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.PrizeResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
@@ -35,8 +32,7 @@ import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
  */
 public final class SwipeController {
 
-    private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
-    private static final String STATISTIC_RESULT_TITLE = "Statistics";
+    private static final String STATISTIC_RESULT_TITLE = "Recommended main routes";
     private static final String TEACHER_RESULT_TITLE = "Teachers to talk with";
     private static final String ACTIVITY_RESULT_TITLE = "Workshops to attend";
     private static final String PRIZE_RESULT_TITLE = "Win the prize";
@@ -183,6 +179,8 @@ public final class SwipeController {
                 // Add the question points to the user points of the route.
                 route.addUserPoints(points);
             }
+
+            // Add the question points to the max points of the route.
             route.addMaxPoints(points);
         }
 
@@ -197,22 +195,23 @@ public final class SwipeController {
 
     private void generateResults() {
         results.clear();
-        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
-        results.add(new TeacherResult(TEACHER_RESULT_TITLE, CompareController.getInstance().compareTeachers(routes, teachers)));
+        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getMainRoutes()));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers)); //CompareController.getInstance().compareTeachers(routes, teachers))
         results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
-
-        // TODO set prize location
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 
-    private List<Route> getTopRoutes() {
-        Queue<Route> queue = new PriorityQueue<>(routes);
-        List<Route> routes = new ArrayList<>();
+    private List<Route> getMainRoutes() {
+        List<Route> mainRoutes = new ArrayList<>();
 
         // Poll the top number of routes from the queue and add them to the list.
-        for (int i = 0; i < NUMBER_OF_TOP_ROUTES; i++) routes.add(queue.poll());
+        for (Route route : routes) {
+            if (route.isMainRoute()) {
+                mainRoutes.add(route);
+            }
+        }
 
-        return routes;
+        return mainRoutes;
     }
 
     public int getQuestionsProgress() {

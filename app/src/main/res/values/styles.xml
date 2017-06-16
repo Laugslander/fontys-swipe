@@ -17,6 +17,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="TextLegend">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="HorizontalProgressBarStyle" parent="NumberProgressBar_Default">
         <item name="progress_reached_color">@color/colorFontysSecondary</item>
         <item name="progress_text_color">@color/colorFontysSecondary</item>
