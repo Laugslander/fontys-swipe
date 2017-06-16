@@ -199,7 +199,7 @@ public final class SwipeController {
         results.clear();
         results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
         results.add(new TeacherResult(TEACHER_RESULT_TITLE, CompareController.getInstance().compareTeachers(routes, teachers)));
-        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
+        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, CompareController.getInstance().compareWorkshops(routes, activities)));
 
         // TODO set prize location
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));

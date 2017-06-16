@@ -1,5 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
+import android.app.Activity;
+import android.view.inputmethod.CorrectionInfo;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,12 +48,8 @@ class CompareController {
     List<Teacher> compareTeachers(List<Route> userPoints, List<Teacher> comparables) {
         HashMap<String, Double> differenceMap = new HashMap<>();
         HashMap<CompareAlgo, Double> resultMap = new HashMap<>();
-        List<Route> correctUserPoints = new ArrayList<Route>();
 
-        for(Route route : userPoints){
-            route.setUserPoints(route.getUserPoints() / (route.getMaxPoints() / 10));
-            correctUserPoints.add(route);
-        }
+        List<Route> correctUserPoints = getCorrectUserPoints(userPoints);
 
         for (CompareAlgo comparable : comparables) {
             double result = 0;
@@ -61,21 +60,61 @@ class CompareController {
 
                 Route route = FindRouteUtilKt.findRoute(teacherEntry.getKey(), correctUserPoints);
 
-                System.out.println("Naam: " + route.getAbbreviation() + " user points: " + route.getUserPoints());
-
                 double difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
                 differenceMap.put(teacherEntry.getKey(), difference);
 
                 result = result + (differenceMap.get(route.getAbbreviation()) * (route.getUserPoints() * 0.1));
-
-                System.out.println("Naam: " + route.getAbbreviation() + " punten: " + route.getUserPoints() + " max points: " +
-                route.getMaxPoints());
             }
 
             resultMap.put(comparable, result);
         }
 
         return new ArrayList(sortByValue(resultMap).keySet());
+    }
+
+    /**
+     * Compare teacher methode compared alle docenten met 1 student en kijkt voor alle docenten welke docenten de beste match is.
+     *
+     * @param userPoints een hashmap met de studie profielen en het aantal punten dat de gebruiker daarbij heeft.
+     * @param comparables   all comparable objects.
+     * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
+     */
+    List<nl.fontys.smpt42_1.fontysswipe.domain.Activity> compareWorkshops(List<Route> userPoints, List<nl.fontys.smpt42_1.fontysswipe.domain.Activity> comparables) {
+        HashMap<String, Double> differenceMap = new HashMap<>();
+        HashMap<CompareAlgo, Double> resultMap = new HashMap<>();
+
+        List<Route> correctUserPoints = getCorrectUserPoints(userPoints);
+
+        for (CompareAlgo comparable : comparables) {
+            double result = 0;
+
+            Map<String, Integer> workshopsMap = comparable.getPoints();
+
+            for (final Map.Entry<String, Integer> teacherEntry : workshopsMap.entrySet()) {
+
+                Route route = FindRouteUtilKt.findRoute(teacherEntry.getKey(), correctUserPoints);
+
+                double difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
+                differenceMap.put(teacherEntry.getKey(), difference);
+
+                result = result + (differenceMap.get(route.getAbbreviation()) * (route.getUserPoints() * 0.1));
+            }
+
+            resultMap.put(comparable, result);
+        }
+
+        return new ArrayList(sortByValue(resultMap).keySet());
+    }
+
+    private List<Route> getCorrectUserPoints(List<Route> userPoints){
+        List<Route> correctUserPoints = new ArrayList<Route>();
+
+        for(Route route : userPoints){
+            route.setUserPoints(route.getUserPoints() / (route.getMaxPoints() / 10));
+            correctUserPoints.add(route);
+        }
+
+        return correctUserPoints;
     }
 
     private static Map<CompareAlgo, Double> sortByValue(Map<CompareAlgo, Double> unsortMap) {
