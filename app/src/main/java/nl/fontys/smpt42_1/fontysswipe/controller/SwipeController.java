@@ -1,5 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -56,6 +59,8 @@ public final class SwipeController {
 
     private School school;
     private int questionCounter;
+
+    private android.app.Activity activity;
 
     private SwipeController(SwipeControllerMainListener listener) {
         mainListener = listener;
@@ -158,8 +163,8 @@ public final class SwipeController {
     }
 
     private void updatePrizeBasedOnLocation(Prize prize, String location) {
-        prize.setDescription(String.format(prize.getDescription(), location));
-
+        ImeiController imei = new ImeiController((android.app.Activity) mainListener);
+        prize.setDescription(String.format(prize.getDescription(), location) + " CODE: " + imei.getImei());
     }
 
     private void updateResults() {
