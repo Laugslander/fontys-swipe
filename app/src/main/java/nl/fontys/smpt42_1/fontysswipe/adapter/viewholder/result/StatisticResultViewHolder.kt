@@ -21,8 +21,7 @@ class StatisticResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
         val colors = arrayOf(colorFontysPrimary, colorFontysPrimaryDark, colorFontysSecondary, colorFontysBlend)
         var index = 0
 
-        val mainRoutes = result.routes
-        mainRoutes.sort()
+        val mainRoutes = result.routes.sorted()
 
         var totalPercentage = 0.0F
         mainRoutes.forEach { route -> totalPercentage += route.percentage }
