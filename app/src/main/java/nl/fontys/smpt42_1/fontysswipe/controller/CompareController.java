@@ -1,15 +1,22 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
+import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
 import nl.fontys.smpt42_1.fontysswipe.domain.interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.util.FindRouteUtilKt;
 
@@ -35,9 +42,15 @@ class CompareController {
      * @param comparables   all comparable objects.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
-    public TreeMap<CompareAlgo, Double> compareTeachers(ArrayList<Route> userPoints, List<CompareAlgo> comparables) {
-        HashMap<String, Integer> differenceMap = new HashMap<>();
+    List<Teacher> compareTeachers(List<Route> userPoints, List<Teacher> comparables) {
+        HashMap<String, Double> differenceMap = new HashMap<>();
         HashMap<CompareAlgo, Double> resultMap = new HashMap<>();
+        List<Route> correctUserPoints = new ArrayList<Route>();
+
+        for(Route route : userPoints){
+            route.setUserPoints(route.getUserPoints() / (route.getMaxPoints() / 10));
+            correctUserPoints.add(route);
+        }
 
         for (CompareAlgo comparable : comparables) {
             double result = 0;
@@ -46,34 +59,47 @@ class CompareController {
 
             for (final Map.Entry<String, Integer> teacherEntry : teachersMap.entrySet()) {
 
-                Route route = FindRouteUtilKt.findRoute(teacherEntry.getKey(), userPoints);
+                Route route = FindRouteUtilKt.findRoute(teacherEntry.getKey(), correctUserPoints);
 
-                int difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
+                System.out.println("Naam: " + route.getAbbreviation() + " user points: " + route.getUserPoints());
+
+                double difference = Math.abs(route.getUserPoints() - teacherEntry.getValue());
                 differenceMap.put(teacherEntry.getKey(), difference);
+
+                result = result + (differenceMap.get(route.getAbbreviation()) * (route.getUserPoints() * 0.1));
+
+                System.out.println("Naam: " + route.getAbbreviation() + " punten: " + route.getUserPoints() + " max points: " +
+                route.getMaxPoints());
             }
 
-            for (Route route : userPoints) {
-                result = result + (differenceMap.get(route.getName()) * (route.getUserPoints() * 0.1));
-            }
-
-            resultMap.put(comparable, (10 - result) * 10);
+            resultMap.put(comparable, result);
         }
 
-        return (TreeMap<CompareAlgo, Double>) entriesSortedByValues(resultMap);
+        return new ArrayList(sortByValue(resultMap).keySet());
     }
 
-    private static <K, V extends Comparable<? super V>> SortedSet<Map.Entry<K, V>> entriesSortedByValues(Map<K, V> map) {
-        SortedSet<Map.Entry<K, V>> sortedEntries = new TreeSet<>(
-                new Comparator<Map.Entry<K, V>>() {
-                    @Override
-                    public int compare(Map.Entry<K, V> e1, Map.Entry<K, V> e2) {
-                        int res = e1.getValue().compareTo(e2.getValue());
-                        return res != 0 ? res : 1;
-                    }
-                }
-        );
-        sortedEntries.addAll(map.entrySet());
-        return sortedEntries;
-    }
+    private static Map<CompareAlgo, Double> sortByValue(Map<CompareAlgo, Double> unsortMap) {
 
+        List<Map.Entry<CompareAlgo, Double>> list = new LinkedList<Map.Entry<CompareAlgo, Double>>(unsortMap.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<CompareAlgo, Double>>() {
+
+            public int compare(Map.Entry<CompareAlgo, Double> o1,
+                               Map.Entry<CompareAlgo, Double> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        Map<CompareAlgo, Double> sortedMap = new LinkedHashMap<CompareAlgo, Double>();
+        for (Map.Entry<CompareAlgo, Double> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<CompareAlgo, Double> entry : sortedMap.entrySet()) {
+            System.out.println("Key : " + entry.getKey().getName()
+                    + " Value : " + entry.getValue());
+        }
+
+        return sortedMap;
+    }
 }

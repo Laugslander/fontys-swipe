@@ -23,6 +23,7 @@ import nl.fontys.smpt42_1.fontysswipe.domain.Question;
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.School;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
+import nl.fontys.smpt42_1.fontysswipe.domain.interfaces.CompareAlgo;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.ActivityResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.PrizeResult;
 import nl.fontys.smpt42_1.fontysswipe.domain.result.Result;
@@ -176,12 +177,13 @@ public final class SwipeController {
         questionCounter++;
 
         for (Route route : routes) {
+            int points = question.getPoints().get(route.getAbbreviation());
             // Check if the answer on the question is positive (yes).
             if (answer) {
                 // Add the question points to the user points of the route.
-                int points = question.getPoints().get(route.getAbbreviation());
                 route.addUserPoints(points);
             }
+            route.addMaxPoints(points);
         }
 
         // Check if all questions are processed.
@@ -196,7 +198,7 @@ public final class SwipeController {
     private void generateResults() {
         results.clear();
         results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
-        results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, CompareController.getInstance().compareTeachers(routes, teachers)));
         results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
 
         // TODO set prize location
