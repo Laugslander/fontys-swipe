@@ -1,5 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,8 @@ import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
  */
 public final class SwipeController {
 
-    private static final String STATISTIC_RESULT_TITLE = "Recommended main routes";
+    private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
+    private static final String STATISTIC_RESULT_TITLE = "Statistics";
     private static final String TEACHER_RESULT_TITLE = "Teachers to talk with";
     private static final String ACTIVITY_RESULT_TITLE = "Workshops to attend";
     private static final String PRIZE_RESULT_TITLE = "Win the prize";
@@ -52,6 +56,8 @@ public final class SwipeController {
 
     private School school;
     private int questionCounter;
+
+    private android.app.Activity activity;
 
     private SwipeController(SwipeControllerMainListener listener) {
         mainListener = listener;
@@ -154,8 +160,8 @@ public final class SwipeController {
     }
 
     private void updatePrizeBasedOnLocation(Prize prize, String location) {
-        prize.setDescription(String.format(prize.getDescription(), location));
-
+        ImeiController imei = new ImeiController((android.app.Activity) mainListener);
+        prize.setDescription(String.format(prize.getDescription(), location) + " CODE: " + imei.getImei());
     }
 
     private void updateResults() {
@@ -195,9 +201,11 @@ public final class SwipeController {
 
     private void generateResults() {
         results.clear();
-        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getMainRoutes()));
-        results.add(new TeacherResult(TEACHER_RESULT_TITLE, teachers)); //CompareController.getInstance().compareTeachers(routes, teachers))
-        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, activities));
+        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, CompareController.getInstance().compareTeachers(routes, teachers)));
+        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, CompareController.getInstance().compareWorkshops(routes, activities)));
+
+        // TODO set prize location
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 

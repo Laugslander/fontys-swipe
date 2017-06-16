@@ -1,5 +1,8 @@
 package nl.fontys.smpt42_1.fontysswipe.domain;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
 /**
  * @author SMPT42-1
  */
