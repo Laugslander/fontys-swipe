@@ -1,8 +1,5 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +32,15 @@ import nl.fontys.smpt42_1.fontysswipe.domain.result.TeacherResult;
  */
 public final class SwipeController {
 
-    private static final int NUMBER_OF_TOP_ROUTES = 4; // Current maximum number of routes is 12.
-    private static final String STATISTIC_RESULT_TITLE = "Statistics";
+    private static final String STATISTIC_RESULT_TITLE = "Main route interests";
     private static final String TEACHER_RESULT_TITLE = "Teachers to talk with";
     private static final String ACTIVITY_RESULT_TITLE = "Workshops to attend";
     private static final String PRIZE_RESULT_TITLE = "Win the prize";
 
     private static SwipeController instance;
+
+    private CompareController compareController;
+    private ImeiController imeiController;
 
     private SwipeControllerMainListener mainListener;
     private SwipeControllerResultListener resultListener;
@@ -55,16 +54,13 @@ public final class SwipeController {
     private Prize prize;
 
     private School school;
-    private int questionCounter;
-
-    private android.app.Activity activity;
+    private int questionCounter = 0;
 
     private SwipeController(SwipeControllerMainListener listener) {
         mainListener = listener;
 
-        results = new ArrayList<>();
-
-        questionCounter = 0;
+        compareController = CompareController.getInstance();
+        imeiController = new ImeiController((android.app.Activity) mainListener);
 
         retrieveData();
     }
@@ -147,9 +143,6 @@ public final class SwipeController {
             @Override
             public void onPrizeReceived(Prize prize) {
                 SwipeController.this.prize = prize;
-
-                updatePrizeBasedOnLocation(prize, school.getCity());
-
                 updateResults();
             }
         });
@@ -160,8 +153,7 @@ public final class SwipeController {
     }
 
     private void updatePrizeBasedOnLocation(Prize prize, String location) {
-        ImeiController imei = new ImeiController((android.app.Activity) mainListener);
-        prize.setDescription(String.format(prize.getDescription(), location) + " CODE: " + imei.getImei());
+        prize.setDescription(String.format(prize.getDescription(), location) + String.format("CODE: %s", imeiController.getImei()));
     }
 
     private void updateResults() {
@@ -200,19 +192,17 @@ public final class SwipeController {
     }
 
     private void generateResults() {
-        results.clear();
-        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getTopRoutes()));
-        results.add(new TeacherResult(TEACHER_RESULT_TITLE, CompareController.getInstance().compareTeachers(routes, teachers)));
-        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, CompareController.getInstance().compareWorkshops(routes, activities)));
-
-        // TODO set prize location
+        results = new ArrayList<>();
+        results.add(new StatisticResult(STATISTIC_RESULT_TITLE, getMainRoutes()));
+        results.add(new TeacherResult(TEACHER_RESULT_TITLE, compareController.compareTeachers(routes, new ArrayList<>(teachers))));
+        results.add(new ActivityResult(ACTIVITY_RESULT_TITLE, compareController.compareWorkshops(routes, new ArrayList<>(activities))));
+        updatePrizeBasedOnLocation(prize, school.getCity());
         results.add(new PrizeResult(PRIZE_RESULT_TITLE, prize));
     }
 
     private List<Route> getMainRoutes() {
         List<Route> mainRoutes = new ArrayList<>();
 
-        // Poll the top number of routes from the queue and add them to the list.
         for (Route route : routes) {
             if (route.isMainRoute()) {
                 mainRoutes.add(route);

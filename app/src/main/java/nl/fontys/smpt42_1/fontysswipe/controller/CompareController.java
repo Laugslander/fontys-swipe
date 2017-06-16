@@ -1,22 +1,13 @@
 package nl.fontys.smpt42_1.fontysswipe.controller;
 
-import android.app.Activity;
-import android.view.inputmethod.CorrectionInfo;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import nl.fontys.smpt42_1.fontysswipe.domain.Route;
 import nl.fontys.smpt42_1.fontysswipe.domain.Teacher;
@@ -75,8 +66,8 @@ class CompareController {
     /**
      * Compare teacher methode compared alle docenten met 1 student en kijkt voor alle docenten welke docenten de beste match is.
      *
-     * @param userPoints een hashmap met de studie profielen en het aantal punten dat de gebruiker daarbij heeft.
-     * @param comparables   all comparable objects.
+     * @param userPoints  een hashmap met de studie profielen en het aantal punten dat de gebruiker daarbij heeft.
+     * @param comparables all comparable objects.
      * @return een gesorteerde map van docenten met het aantal procenten dat matcht.
      */
     List<nl.fontys.smpt42_1.fontysswipe.domain.Activity> compareWorkshops(List<Route> userPoints, List<nl.fontys.smpt42_1.fontysswipe.domain.Activity> comparables) {
@@ -106,10 +97,10 @@ class CompareController {
         return new ArrayList(sortByValue(resultMap).keySet());
     }
 
-    private List<Route> getCorrectUserPoints(List<Route> userPoints){
+    private List<Route> getCorrectUserPoints(List<Route> userPoints) {
         List<Route> correctUserPoints = new ArrayList<Route>();
 
-        for(Route route : userPoints){
+        for (Route route : userPoints) {
             route.setUserPoints(route.getUserPoints() / (route.getMaxPoints() / 10));
             correctUserPoints.add(route);
         }
@@ -141,4 +132,5 @@ class CompareController {
 
         return sortedMap;
     }
+
 }

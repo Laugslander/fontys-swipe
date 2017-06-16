@@ -36,6 +36,7 @@ class LocationController implements LocationListener {
     private static final int MIN_GPS_DISTANCE = 0;
     private static final int GEOCODER_RESULTS = 1;
     private static final int GEOCODER_RESULT_INDEX = 0;
+    private static final String FALLBACK_LOCATION = "Eindhoven";
 
     private final Activity activity;
     private final List<School> schools;
@@ -58,7 +59,11 @@ class LocationController implements LocationListener {
             LocationManager manager = (LocationManager) activity.getSystemService(LOCATION_SERVICE);
             manager.requestLocationUpdates(GPS_SERVICE, MIN_GPS_TIME, MIN_GPS_DISTANCE, this);
             Location location = manager.getLastKnownLocation(GPS_SERVICE);
-            city = new Geocoder(activity).getFromLocation(location.getLatitude(), location.getLongitude(), GEOCODER_RESULTS).get(GEOCODER_RESULT_INDEX).getLocality();
+            if (location == null) {
+                city = new Geocoder(activity).getFromLocation(location.getLatitude(), location.getLongitude(), GEOCODER_RESULTS).get(GEOCODER_RESULT_INDEX).getLocality();
+            } else {
+                city = FALLBACK_LOCATION; // Fall back to the FALLBACK_LOCATION, in case something goes wrong with determining the location.
+            }
         } catch (IOException | NullPointerException e) {
             logger.log(Level.SEVERE, "An error occurred while retrieving the location.", e);
         }
