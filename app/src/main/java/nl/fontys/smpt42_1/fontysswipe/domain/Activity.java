@@ -27,13 +27,14 @@ public class Activity implements CompareAlgo {
     }
 
     @Override
+    public String getName() {
+        return title;
+    }
+
+    @Override
     public Map<String, Integer> getPoints() {
         return points;
     }
 
-    @Override
-    public String getName() {
-        return title;
-    }
 
 }

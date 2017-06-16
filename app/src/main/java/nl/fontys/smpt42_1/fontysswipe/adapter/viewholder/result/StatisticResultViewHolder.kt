@@ -33,6 +33,7 @@ class StatisticResultViewHolder(itemView: View) : ResultViewHolder(itemView) {
         }
 
         list_view_route_legend.adapter = RouteLegendItemAdapter(context, mainRoutes)
+        println()
     }
 
 

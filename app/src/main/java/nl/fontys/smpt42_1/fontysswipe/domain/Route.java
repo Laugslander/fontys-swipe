@@ -50,7 +50,7 @@ public class Route implements Comparable<Route> {
     }
 
     public float getPercentage() {
-        return (float) userPoints / maxPoints * 100.0F;
+        return (float) userPoints / (maxPoints / 100.0F) * 100.0F;
     }
 
     @Override

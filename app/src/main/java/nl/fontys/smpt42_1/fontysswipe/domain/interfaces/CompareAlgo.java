@@ -7,6 +7,8 @@ import java.util.Map;
  */
 public interface CompareAlgo {
 
-    Map<String, Integer> getPoints();
     String getName();
+
+    Map<String, Integer> getPoints();
+
 }

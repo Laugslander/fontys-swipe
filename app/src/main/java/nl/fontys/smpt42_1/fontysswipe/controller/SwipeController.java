@@ -153,7 +153,7 @@ public final class SwipeController {
     }
 
     private void updatePrizeBasedOnLocation(Prize prize, String location) {
-        prize.setDescription(String.format(prize.getDescription(), location) + String.format("CODE: %s", imeiController.getImei()));
+        prize.setDescription(String.format(prize.getDescription(), location) + String.format(" CODE: %s", imeiController.getImei()));
     }
 
     private void updateResults() {

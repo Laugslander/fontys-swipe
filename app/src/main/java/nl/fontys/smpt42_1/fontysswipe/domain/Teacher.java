@@ -25,10 +25,6 @@ public class Teacher implements CompareAlgo {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -43,6 +39,11 @@ public class Teacher implements CompareAlgo {
 
     public String getImage() {
         return image;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
