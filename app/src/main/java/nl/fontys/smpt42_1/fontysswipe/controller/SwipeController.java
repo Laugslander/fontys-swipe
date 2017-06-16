@@ -90,7 +90,7 @@ public final class SwipeController {
     private void retrieveInitialData() {
         new SchoolRepository().getLocations(new OnSchoolsReceivedCallback() {
             @Override
-            public void onSchoolsReceived(List<School> schools) {
+            public void onSchoolsReceived(final List<School> schools) {
                 // Check at which school location the app user is.
                 location = new LocationController((android.app.Activity) mainListener, schools);
                 school = location.getSchoolLocation();
@@ -100,8 +100,7 @@ public final class SwipeController {
                     public void onQuestionsReceived(List<Question> questions) {
                         SwipeController.this.questions = questions;
 
-                        Question initialInfoQuestion = questions.get(0);
-                        initialInfoQuestion.setText(String.format(initialInfoQuestion.getText(), school.getCity()));
+                        updateIntialQuestionBasedOnLocation(questions.get(0), school.getCity());
 
                         // Notify the MainActivity that the location data is retrieved.
                         mainListener.onSwipeControllerInitialized();
@@ -145,9 +144,21 @@ public final class SwipeController {
             @Override
             public void onPrizeReceived(Prize prize) {
                 SwipeController.this.prize = prize;
+
+                updatePrizeBasedOnLocation(prize, school.getCity());
+
                 updateResults();
             }
         });
+    }
+
+    private void updateIntialQuestionBasedOnLocation(Question question, String location) {
+        question.setText(String.format(question.getText(), location));
+    }
+
+    private void updatePrizeBasedOnLocation(Prize prize, String location) {
+        prize.setDescription(String.format(prize.getDescription(), location));
+
     }
 
     private void updateResults() {
